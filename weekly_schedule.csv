@@ -1,66 +1,66 @@
 Time,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
-0400,,,,,,,
-0415,,,,,,,
-0430,,,,,,,
-0445,,,,,,,
-0500,,,,,,,
-0515,,,,,,,
-0530,,,,,,,
-0545,,,,,,,
-0600,,,,,,,
-0615,,,,,,,
-0630,,,,,,,
-0645,,,,,,,
-0700,,,,,,,
-0715,,,,,,,
-0730,,,,,,,
-0745,,,,,,,
-0800,,,,,,,
-0815,,,,,,,
-0830,,,,,,,
-0845,,,,,,,
-0900,,,,,,,
-0915,,,,,,,
-0930,,,,,,,
-0945,,,,,,,
-1000,,,,,,,
-1015,,,,,,,
-1030,,,,,,,
-1045,,,,,,,
-1100,,,,,,,
-1115,,,,,,,
-1130,,,,,,,
-1145,,,,,,,
-1200,,,,,,,
-1215,,,,,,,
-1230,,,,,,,
-1245,,,,,,,
-1300,,,,,,,
-1315,,,,,,,
-1330,,,,,,,
-1345,,,,,,,
-1400,,,,,,,
-1415,,,,,,,
-1430,,,,,,,
-1445,,,,,,,
-1500,,,,,,,
-1515,,,,,,,
-1530,,,,,,,
-1545,,,,,,,
-1600,,,,,,,
-1615,,,,,,,
-1630,,,,,,,
-1645,,,,,,,
-1700,,,,,,,
-1715,,,,,,,
-1730,,,,,,,
-1745,,,,,,,
-1800,,,,,,,
-1815,,,,,,,
-1830,,,,,,,
-1845,,,,,,,
-1900,,,,,,,
-1915,,,,,,,
-1930,,,,,,,
-1945,,,,,,,
-2000,,,,,,,
+0400,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate
+0415,Bike (Cardio),Dumbbells (Upper),Bike (Cardio),Dumbbells (Lower),Bike (Cardio),Bike (Light Warmup),Rest / Stretch
+0430,Bike (Cardio),Dumbbells (Upper),Bike (Cardio),Dumbbells (Lower),Bike (Cardio),Bike (Light Warmup),Rest / Stretch
+0445,Bike (Cardio),Dumbbells (Upper),Bike (Cardio),Dumbbells (Lower),Bike (Cardio),Pack Gear + Camera,Breakfast Burrito
+0500,Cool Down + Stretch,Cool Down + Stretch,Cool Down + Stretch,Cool Down + Stretch,Cool Down + Stretch,Shower + Get Ready,Shower + Get Ready
+0515,Shower + Get Ready,Shower + Get Ready,Shower + Get Ready,Shower + Get Ready,Shower + Get Ready,Drive to Spot,Snap Photos — Bayfront Park (10 min away)
+0530,Commute,Commute,Commute,Commute,Commute,Sunrise @ Coronado Beach (20 min),Snap Photos — Bayfront Park
+0545,Work,Work,Work,Work,Work,Sunrise @ Coronado Beach,Snap Photos — Bayfront Park
+0600,Work,Work,Work,Work,Work,Snap Photos — Coronado Beach,Snap Photos — Bayfront Park
+0615,Work,Work,Work,Work,Work,Snap Photos — Coronado Beach,Walk Bayfront Trail
+0630,Work,Work,Work,Work,Work,Snap Photos — Hotel Del / Coronado,Walk Bayfront Trail
+0645,Work,Work,Work,Work,Work,Snap Photos — Hotel Del / Coronado,Walk Bayfront Trail
+0700,Work,Work,Work,Work,Work,Drive to Cabrillo National Monument (25 min),Drive to Otay Valley Regional Park (10 min)
+0715,Work,Work,Work,Work,Work,Hike + Photos — Cabrillo Tidepools,Hike + Photos — Otay Valley
+0730,Work,Work,Work,Work,Work,Hike + Photos — Cabrillo Tidepools,Hike + Photos — Otay Valley
+0745,Work,Work,Work,Work,Work,Hike + Photos — Cabrillo Lighthouse Trail,Hike + Photos — Otay Valley
+0800,Work,Work,Work,Work,Work,Hike + Photos — Cabrillo Lighthouse Trail,Hike + Photos — Otay Valley
+0815,Work,Work,Work,Work,Work,Snap Photos — Point Loma Views,Snap Photos — Otay River
+0830,Work,Work,Work,Work,Work,Snap Photos — Point Loma Views,Head Home (10 min)
+0845,Work,Work,Work,Work,Work,Drive to Sunset Cliffs (10 min),Grocery Run / Meal Prep Burritos
+0900,Work,Work,Work,Work,Work,Explore + Photos — Sunset Cliffs,Grocery Run / Meal Prep Burritos
+0915,Work,Work,Work,Work,Work,Explore + Photos — Sunset Cliffs,Grocery Run / Meal Prep Burritos
+0930,Work,Work,Work,Work,Work,Explore + Photos — Sunset Cliffs,Meal Prep Burritos
+0945,Work,Work,Work,Work,Work,Snap Photos — Ocean Beach Pier (5 min),Meal Prep Burritos
+1000,Work,Work,Work,Work,Work,Snap Photos — Ocean Beach Pier,Meal Prep Burritos
+1015,Work,Work,Work,Work,Work,Snap Photos — Ocean Beach,Batch Edit Photos from Weekend
+1030,Work,Work,Work,Work,Work,Drive to Balboa Park (20 min),Batch Edit Photos from Weekend
+1045,Work,Work,Work,Work,Work,Explore + Photos — Balboa Park Gardens,Batch Edit Photos from Weekend
+1100,Work,Work,Work,Work,Work,Explore + Photos — Balboa Park,Schedule Posts (AI queues the week)
+1115,Work,Work,Work,Work,Work,Explore + Photos — Balboa Park,Schedule Posts (AI queues the week)
+1130,Work,Work,Work,Work,Work,Snap Photos — Balboa Park Architecture,Review AI Engagement Analytics
+1145,Work,Work,Work,Work,Work,Snap Photos — Balboa Park Architecture,Free Time / Personal
+1200,Work,Work,Work,Work,Work,Lunch — Local Spot in Hillcrest/North Park,Free Time / Personal
+1215,Work,Work,Work,Work,Work,Lunch — Local Spot (snap food photos),Free Time / Personal
+1230,Work,Work,Work,Work,Work,Drive to Torrey Pines (35 min),Free Time / Personal
+1245,Work,Work,Work,Work,Work,Drive to Torrey Pines,Outdoor Hangout / Social
+1300,Work,Work,Work,Work,Work,Hike + Photos — Torrey Pines Reserve,Outdoor Hangout / Social
+1315,Work,Work,Work,Work,Work,Hike + Photos — Torrey Pines Reserve,Outdoor Hangout / Social
+1330,Work,Work,Work,Work,Work,Hike + Photos — Torrey Pines Beach Trail,Outdoor Hangout / Social
+1345,Work,Work,Work,Work,Work,Hike + Photos — Torrey Pines Beach Trail,Outdoor Hangout / Social
+1400,Work,Work,Work,Work,Work,Snap Photos — Torrey Pines Overlook,Head Home
+1415,Work,Work,Work,Work,Work,Snap Photos — Torrey Pines Beach,Chores / Laundry / Clean
+1430,Work,Work,Work,Work,Work,Drive to La Jolla (10 min),Chores / Laundry / Clean
+1445,Work,Work,Work,Work,Work,Explore + Photos — La Jolla Cove,Chores / Laundry / Clean
+1500,Work,Work,Work,Work,Work,Explore + Photos — La Jolla Seals,Chores / Laundry / Clean
+1515,Work,Work,Work,Work,Work,Snap Photos — La Jolla Shores,Prep Week Ahead (Clothes + Bag)
+1530,Work,Work,Work,Work,Work,Snap Photos — La Jolla Coast,Prep Week Ahead
+1545,Work,Work,Work,Work,Work,Head Home (35 min),Relax / Read / Decompress
+1600,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Head Home,Relax / Read / Decompress
+1615,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Drive Home,Relax / Read / Decompress
+1630,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Arrive Home,Relax / Read / Decompress
+1645,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Shower + Change,Dinner (Burrito)
+1700,Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito)
+1715,Chores / Life Admin,Quick Photo Edit + Post,Chores / Life Admin,Quick Photo Edit + Post,Prep Weekend Bag + Camera,Edit Saturday Photos,Review AI Mastodon Stats
+1730,Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Prep Weekend Bag + Camera,Schedule Posts (AI queues),Wind Down (No Screens)
+1745,Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Meal Prep Check,Wind Down (No Screens),Wind Down (No Screens)
+1800,Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens)
+1815,Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens)
+1830,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep
+1845,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed
+1900,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed,Read in Bed
+1915,Lights Out,Lights Out,Lights Out,Lights Out,Lights Out,Lights Out,Lights Out
+1930,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
+1945,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
+2000,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
