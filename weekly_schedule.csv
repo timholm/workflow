@@ -50,11 +50,11 @@ Time,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
 1600,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Head Home,Relax / Read / Decompress
 1615,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Drive Home,Relax / Read / Decompress
 1630,Commute Home,Commute Home,Commute Home,Commute Home,Commute Home,Arrive Home,Relax / Read / Decompress
-1645,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Home + Change Clothes,Shower + Change,Dinner (Burrito)
-1700,Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito),Dinner (Burrito)
-1715,Chores / Life Admin,Quick Photo Edit + Post,Chores / Life Admin,Quick Photo Edit + Post,Prep Weekend Bag + Camera,Edit Saturday Photos,Review AI Mastodon Stats
-1730,Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Prep Weekend Bag + Camera,Schedule Posts (AI queues),Wind Down (No Screens)
-1745,Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Walk Outside (Decompress),Meal Prep Check,Wind Down (No Screens),Wind Down (No Screens)
+1645,Home + Grab Camera,Home + Grab Camera,Home + Grab Camera,Home + Grab Camera,Home + Grab Camera,Shower + Change,Dinner (Burrito)
+1700,Drive to Bayfront Park (10 min),Drive to J Street Marina (10 min),Drive to Imperial Beach Pier (15 min),Drive to Pepper Park (10 min),Drive to Third Ave Village (5 min),Dinner (Burrito),Dinner (Burrito)
+1715,Golden Hour Photos — Bayfront Park,Golden Hour Photos — J Street Marina,Golden Hour Photos — IB Pier + Sunset,Golden Hour Photos — Pepper Park / Bay,Golden Hour Photos — Downtown Chula Vista,Edit Saturday Photos,Review AI Mastodon Stats
+1730,Golden Hour Photos — Bayfront Park,Golden Hour Photos — J Street Marina,Golden Hour Photos — IB Pier + Sunset,Golden Hour Photos — Pepper Park / Bay,Golden Hour Photos — Third Ave Street Life,Schedule Posts (AI queues),Wind Down (No Screens)
+1745,Dinner (Burrito) + Post Photo,Dinner (Burrito) + Post Photo,Dinner (Burrito) + Post Photo,Dinner (Burrito) + Post Photo,Dinner (Burrito) + Prep Weekend Bag,Wind Down (No Screens),Wind Down (No Screens)
 1800,Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens)
 1815,Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens),Wind Down (No Screens)
 1830,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep,Bed Prep
