@@ -4,63 +4,63 @@ Time,Q1 Weekday (Jan-Mar) Sunset ~1745,Q1 Weekend (Jan-Mar),Q2 Weekday (Apr-Jun)
 0430,Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup)
 0445,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera
 0500,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready
-0515,Shower + Get Ready,Drive to Spot,Shower + Get Ready,Drive to Spot,Shower + Get Ready,Drive to Spot,Shower + Get Ready,Drive to Spot
-0520,Leave House,Drive to Spot,Leave House,Drive to Spot,Leave House,Drive to Spot,Leave House,Drive to Spot
-0530,Commute,Sunrise — Coronado Beach (20 min),Commute,Sunrise — Mission Bay (30 min),Commute,Sunrise — Mission Trails (30 min),Commute,Sunrise — Drive to Julian (60 min)
-0545,Work,Sunrise Photos — Coronado Beach,Work,Sunrise Photos — Mission Bay,Work,Sunrise Photos — Mission Trails,Work,Drive to Julian
-0600,Work,Photos — Coronado / Hotel Del,Work,Photos — Mission Bay Shores,Work,Photos — Mission Trails Visitor Center,Work,Drive to Julian
-0615,Work,Photos — Coronado / Hotel Del,Work,Photos — Mission Bay Boardwalk,Work,Photos — Oak Canyon Trail,Work,Drive to Julian
-0630,Work,Drive to Cabrillo (25 min),Work,Drive to Pacific Beach (10 min),Work,Hike + Photos — Cowles Mountain,Work,Arrive Julian — Main Street Photos
-0645,Work,Drive to Cabrillo,Work,Photos — Pacific Beach Boardwalk,Work,Hike + Photos — Cowles Mountain,Work,Photos — Julian Town + Orchards
-0700,Work,Hike + Photos — Cabrillo Tidepools,Work,Photos — Pacific Beach Boardwalk,Work,Hike + Photos — Cowles Summit,Work,Photos — Julian Town + Orchards
-0715,Work,Hike + Photos — Cabrillo Tidepools,Work,Photos — Crystal Pier,Work,Hike + Photos — Cowles Summit Views,Work,Hike — Volcan Mountain Trail
-0730,Work,Hike + Photos — Cabrillo Lighthouse,Work,Drive to Solana Beach (20 min),Work,Photos — Cowles Summit Panoramic,Work,Hike + Photos — Volcan Mountain
-0745,Work,Hike + Photos — Cabrillo Lighthouse,Work,Photos — Fletcher Cove Solana Beach,Work,Drive to Lake Murray (15 min),Work,Hike + Photos — Volcan Mountain
-0800,Work,Photos — Point Loma Views,Work,Photos — Fletcher Cove,Work,Photos — Lake Murray Loop,Work,Hike + Photos — Volcan Mountain
-0815,Work,Drive to Sunset Cliffs (10 min),Work,Drive to Encinitas (10 min),Work,Photos — Lake Murray Loop,Work,Drive to Cuyamaca (30 min)
-0830,Work,Explore + Photos — Sunset Cliffs,Work,Photos — Moonlight Beach Encinitas,Work,Photos — Lake Murray Dam Views,Work,Hike + Photos — Cuyamaca Peak Trail
-0845,Work,Explore + Photos — Sunset Cliffs,Work,Photos — Swami's Beach,Work,Photos — Lake Murray Wildlife,Work,Hike + Photos — Cuyamaca Peak Trail
-0900,Work,Photos — Ocean Beach Pier (5 min),Work,Photos — Self Realization Gardens,Work,Drive to Old Town (20 min),Work,Hike + Photos — Cuyamaca Peak Trail
-0915,Work,Photos — Ocean Beach Pier,Work,Drive to Carlsbad (15 min),Work,Photos — Old Town State Park,Work,Hike + Photos — Cuyamaca Peak
-0930,Work,Drive to Balboa Park (20 min),Work,Photos — Carlsbad Village,Work,Photos — Old Town Adobe Buildings,Work,Photos — Cuyamaca Peak Views
-0945,Work,Drive to Balboa Park,Work,Photos — Carlsbad State Beach,Work,Photos — Old Town Heritage Park,Work,Drive to Mt Laguna (30 min)
-1000,Work,Explore + Photos — Balboa Park Gardens,Work,Photos — Carlsbad Flower Fields,Work,Drive to Shelter Island (15 min),Work,Hike + Photos — Mt Laguna
-1015,Work,Explore + Photos — Balboa Park,Work,Photos — Carlsbad Flower Fields,Work,Photos — Shelter Island Marina,Work,Hike + Photos — Mt Laguna
-1030,Work,Photos — Balboa Park Architecture,Work,Drive to Oceanside (15 min),Work,Photos — Shelter Island Views,Work,Photos — Mt Laguna Overlook
-1045,Work,Photos — Balboa Park Architecture,Work,Photos — Oceanside Pier,Work,Photos — Shelter Island Lighthouse,Work,Photos — Mt Laguna Desert Views
-1100,Work,Lunch — Hillcrest / North Park,Work,Photos — Oceanside Harbor,Work,Lunch — Shelter Island / Point Loma,Work,Lunch — Mt Laguna Lodge
-1115,Work,Lunch + Snap Food Photos,Work,Lunch — Oceanside Harbor (snap photos),Work,Lunch + Snap Food Photos,Work,Lunch + Snap Photos
-1130,Work,Drive to Torrey Pines (35 min),Work,Photos — Oceanside Strand,Work,Drive to SD Harbor (10 min),Work,Drive to Anza-Borrego (45 min)
-1145,Work,Drive to Torrey Pines,Work,Photos — Oceanside Beach,Work,Photos — SD Harbor / Embarcadero,Work,Drive to Anza-Borrego
-1200,Work,Hike + Photos — Torrey Pines Reserve,Work,Drive South — Coastal Route Home,Work,Photos — USS Midway Area,Work,Drive to Anza-Borrego
-1215,Work,Hike + Photos — Torrey Pines Reserve,Work,Golden Hour Photos — Del Mar Beach,Work,Photos — Seaport Village,Work,Photos — Anza-Borrego Desert
-1230,Work,Hike + Photos — Torrey Pines Beach,Work,Golden Hour Photos — Del Mar Beach,Work,Photos — Convention Center Waterfront,Work,Photos — Anza-Borrego Badlands
-1245,Work,Hike + Photos — Torrey Pines Beach,Work,Golden Hour Photos — Torrey Pines,Work,Golden Hour Photos — Harbor Views,Work,Photos — Anza-Borrego Wildflowers
-1300,Work,Photos — Torrey Pines Overlook,Work,Golden Hour Photos — Torrey Pines,Work,Golden Hour Photos — Harbor Island,Work,Hike + Photos — Borrego Palm Canyon
-1315,Work,Drive to La Jolla (10 min),Work,Golden Hour Photos — Coast,Work,Golden Hour Photos — Harbor Island,Work,Hike + Photos — Borrego Palm Canyon
-1330,Work,Explore + Photos — La Jolla Cove,Work,Golden Hour Photos — Coast,Work,Golden Hour Photos — Embarcadero,Work,Photos — Anza-Borrego Desert Light
-1345,Work,Explore + Photos — La Jolla Seals,Work,Golden Hour Photos — Coast,Work,Golden Hour Photos — Embarcadero,Work,Photos — Anza-Borrego Desert Light
-1400,Work,Photos — La Jolla Shores,Work,Golden Hour Photos — La Jolla,Work,Golden Hour Photos — Star of India,Work,Golden Hour — Anza-Borrego
-1415,Work,Photos — La Jolla Coast Walk,Work,Golden Hour Photos — La Jolla,Work,Golden Hour Photos — SD Skyline,Work,Golden Hour — Anza-Borrego
-1430,Work,Photos — La Jolla Cliffs,Work,Sunset Photos — La Jolla Cove,Work,Sunset Photos — Harbor Island,Work,Golden Hour — Anza-Borrego
-1445,Work,Golden Hour Photos — La Jolla,Work,Sunset Photos — La Jolla Cove,Work,Sunset Photos — Harbor Island,Work,Sunset Photos — Anza-Borrego
-1500,Work,Golden Hour Photos — La Jolla,Work,Sunset Photos — La Jolla,Work,Sunset Photos — SD Skyline,Work,Sunset Photos — Anza-Borrego
-1515,Work,Golden Hour Photos — La Jolla,Work,Sunset Photos — La Jolla,Work,Sunset Photos — SD Skyline,Work,Sunset Photos — Anza-Borrego
-1530,Work,Sunset Photos — La Jolla,Work,Post Best Shot,Work,Post Best Shot,Work,Sunset Photos — Anza-Borrego
-1545,Work,Sunset Photos — La Jolla,Work,Post Best Shot + Drive Home,Work,Post Best Shot + Drive Home,Work,Post Best Shot
-1600,Commute Home,Sunset Photos — La Jolla,Commute Home,Drive Home (35 min),Commute Home,Drive Home (25 min),Commute Home,Post Best Shot + Drive Home
-1615,Commute Home,Post Best Shot + Drive Home,Commute Home,Drive Home,Commute Home,Drive Home,Commute Home,Drive Home (60 min)
-1630,Commute Home,Drive Home (35 min),Commute Home,Drive Home,Commute Home,Drive Home,Commute Home,Drive Home
-1645,Home + Eat Burrito + Grab Camera,Drive Home,Home + Eat Burrito + Grab Camera,Home — Bed — Sleep,Home + Eat Burrito + Grab Camera,Home — Bed — Sleep,Home + Eat Burrito,Drive Home
-1700,Drive to Bayfront Park (10 min),Drive Home,Drive to Otay Valley (10 min),Sleep,Drive to Border Field (15 min),Sleep,Catch Last Light — Bayside Park (5 min),Drive Home
-1715,Golden Hour Photos — Bayfront Park,Home — Bed — Sleep,Golden Hour Photos — Otay Valley,Sleep,Golden Hour Photos — Border Field,Sleep,Sun Drops — Post Shot + Drive Home,Home — Bed — Sleep
-1730,Sunset Photos — Post Best Shot,Sleep,Golden Hour Photos — Otay Valley Trail,Sleep,Golden Hour Photos — Tijuana Estuary,Sleep,Home — Bed — Sleep,Sleep
-1745,Sun Drops — Drive Home,Sleep,Golden Hour Photos — Otay River,Sleep,Golden Hour Photos — Tijuana Estuary,Sleep,Sleep,Sleep
-1800,Home — Bed — Sleep,Sleep,Golden Hour Photos — Otay Valley,Sleep,Golden Hour Photos — Salt Works,Sleep,Sleep,Sleep
-1815,Sleep,Sleep,Golden Hour Photos — Otay Valley,Sleep,Golden Hour Photos — Salt Works,Sleep,Sleep,Sleep
-1830,Sleep,Sleep,Sunset Photos — Otay Valley,Sleep,Sunset Photos — Border Field,Sleep,Sleep,Sleep
-1845,Sleep,Sleep,Sunset Photos — Otay Valley,Sleep,Sunset Photos — Border Field,Sleep,Sleep,Sleep
-1900,Sleep,Sleep,Post Best Shot,Sleep,Sunset Photos — Border Field,Sleep,Sleep,Sleep
+0515,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event
+0520,Leave House,Drive to Event,Leave House,Drive to Event,Leave House,Drive to Event,Leave House,Drive to Event
+0530,Commute,Drive to Little Italy (20 min),Commute,Drive to Hillcrest (20 min),Commute,Drive to OB Farmers Market (25 min),Commute,Drive to Chula Vista Lemon Festival / Holiday Market
+0545,Work,Little Italy Mercato Farmers Market,Work,Hillcrest Farmers Market,Work,OB Wednesday Farmers Market (Sat session),Work,Seasonal Market / Festival
+0600,Work,Little Italy Mercato — Food Vendors,Work,Hillcrest Farmers Market — Browse,Work,OB Farmers Market — Browse + Photos,Work,Seasonal Market — Browse + Photos
+0615,Work,Little Italy Mercato — Snap Photos of Vendors,Work,Hillcrest Farmers Market — Snap Photos,Work,OB Farmers Market — Vendor Photos,Work,Seasonal Market — Vendor Photos
+0630,Work,Little Italy Mercato — Craft Stalls,Work,Hillcrest — Street Art Walk,Work,Drive to Pacific Beach (10 min),Work,Drive to Balboa Park (20 min)
+0645,Work,Drive to Embarcadero (5 min),Work,Hillcrest — Mural Photos,Work,PB Farmers Market,Work,Drive to Balboa Park
+0700,Work,SD Embarcadero Morning Runners + Yoga Groups,Work,Drive to North Park (10 min),Work,PB Farmers Market — Browse + Photos,Work,Balboa Park Free Tuesday Museum Day (Sat hours)
+0715,Work,Embarcadero — Fishing Pier Activity,Work,North Park Thursday Market (Sat pop-up),Work,PB Farmers Market — Vendor Photos,Work,Balboa Park — Museum Courtyard Photos
+0730,Work,Drive to Barrio Logan (10 min),Work,North Park — Craft Beer Walk,Work,Drive to Mission Bay (5 min),Work,Balboa Park — Spanish Village Art Center
+0745,Work,Barrio Logan — Chicano Park Murals,Work,North Park — Brewery Row Photos,Work,Mission Bay — Sailing Regatta / Paddle Events,Work,Balboa Park — Artists at Work Photos
+0800,Work,Barrio Logan — Mural Photos,Work,North Park — Record Shop / Vintage Store Walk,Work,Mission Bay — Water Sports Photos,Work,Balboa Park — Botanical Building
+0815,Work,Barrio Logan Art Walk Galleries,Work,Drive to South Park (5 min),Work,Mission Bay — Beach Volleyball Tournaments,Work,Drive to Old Town (15 min)
+0830,Work,Barrio Logan — Street Art Photos,Work,South Park — Walkabout + Shop Fronts,Work,Mission Bay — Volleyball Photos,Work,Old Town — Dia de los Muertos Prep (Q4) / Fiesta Events
+0845,Work,Drive to Coronado (15 min),Work,South Park — Community Garden Photos,Work,Drive to La Jolla (20 min),Work,Old Town — Cultural Festival Photos
+0900,Work,Coronado Flower Show (Jan) / Art Walk,Work,Drive to Balboa Park (10 min),Work,La Jolla Concerts by the Sea,Work,Old Town — Mariachi + Folk Dancing Photos
+0915,Work,Coronado — Event Photos,Work,Balboa Park — Organ Pavilion Concert (free),Work,La Jolla — Concert Photos,Work,Old Town — Heritage Walk Photos
+0930,Work,Coronado — Event Photos,Work,Balboa Park — Organ Concert Photos,Work,La Jolla Art Walk / Gallery Openings,Work,Drive to Barrio Logan (10 min)
+0945,Work,Drive to Imperial Beach (15 min),Work,Balboa Park — Street Performers,Work,La Jolla — Gallery Photos,Work,Barrio Logan — Mercado del Barrio
+1000,Work,IB Surf Classic / Sand Castle Event (seasonal),Work,Balboa Park — Cultural Dance Groups,Work,Drive to Del Mar (15 min),Work,Barrio Logan — Food Vendor Photos
+1015,Work,IB — Event Photos,Work,Balboa Park — Performer Photos,Work,Del Mar Races / Polo Events,Work,Barrio Logan — Community Event Photos
+1030,Work,IB — Beach Community Photos,Work,Drive to Old Town (15 min),Work,Del Mar — Event Photos,Work,Drive to National City (10 min)
+1045,Work,Drive to Chula Vista (15 min),Work,Old Town — Cinco de Mayo Fest (May),Work,Del Mar — Crowd + Action Photos,Work,National City — Mile of Cars Community Events
+1100,Work,Chula Vista — Third Ave Walkabout,Work,Old Town — Fiesta Event Photos,Work,Lunch — Del Mar Plaza,Work,National City — Kimball Park Event
+1115,Work,Lunch — Third Ave Restaurant,Work,Old Town — Lunch + Food Photos,Work,Lunch + Snap Food Photos,Work,Lunch — National City
+1130,Work,Chula Vista Heritage Museum / Bayfront Event,Work,Drive to Gaslamp (10 min),Work,Drive to Encinitas (20 min),Work,Drive to Chula Vista (10 min)
+1145,Work,Bayfront — Community Event Photos,Work,Gaslamp Quarter — ShamROCK (Mar) / Street Fairs,Work,Encinitas Street Fair / Surf Contest,Work,Chula Vista — Starlight Parade Prep (Dec) / Fall Fest
+1200,Work,Bayfront — Harbor Activity Photos,Work,Gaslamp — Festival Photos,Work,Encinitas — Event Photos,Work,Chula Vista — Community Event Photos
+1215,Work,Drive to Otay Valley (10 min),Work,Gaslamp — Street Scene Photos,Work,Encinitas — Surf Culture Photos,Work,Chula Vista — Third Ave Holiday Walk
+1230,Work,Otay Valley — Bird Watching Group,Work,Gaslamp — People Watching Photos,Work,Drive to Carlsbad (15 min),Work,Drive to Eastlake (10 min)
+1245,Work,Otay Valley — Nature Walk Group Photos,Work,Drive to East Village (5 min),Work,Carlsbad — LEGOLAND Area Events,Work,Eastlake — Community Center Events
+1300,Work,Otay Valley — Trail Runner Events,Work,East Village — Petco Park Tailgate / Game Day,Work,Carlsbad — Village Street Fair (spring/summer),Work,Eastlake — Holiday Craft Fair / Market
+1315,Work,Drive to Pepper Park (10 min),Work,East Village — Quartyard Events,Work,Carlsbad — Event Photos,Work,Drive to Otay Ranch (10 min)
+1330,Work,Pepper Park — Lowrider Shows / Car Events,Work,East Village — Food Truck Friday (various),Work,Carlsbad — Flower Fields Events,Work,Otay Ranch Town Center — Holiday Events
+1345,Work,Pepper Park — Car Show Photos,Work,East Village — Food Truck Photos,Work,Carlsbad — Vendor Photos,Work,Otay Ranch — Community Gathering Photos
+1400,Work,Pepper Park — Community BBQ Photos,Work,East Village — Maker Faire / Pop-up Events,Work,Drive to Oceanside (15 min),Work,Otay Ranch — Event Photos
+1415,Work,Golden Hour — Pepper Park Bay Views,Work,Golden Hour — East Village Rooftop Views,Work,Oceanside — Sunset Market (Thu — Sat version),Work,Golden Hour — Otay Ranch
+1430,Work,Golden Hour — Coronado Bridge Backdrop,Work,Golden Hour — Gaslamp Neon Signs,Work,Oceanside — Sunset Market Photos,Work,Drive to Bayfront (10 min)
+1445,Work,Sunset — Pepper Park,Work,Golden Hour — Gaslamp Street Life,Work,Oceanside — Live Music + Street Performer Photos,Work,Sunset — Bayfront Park
+1500,Work,Sunset Photos — Pepper Park,Work,Sunset — Gaslamp Quarter,Work,Oceanside — Harbor Market / Craft Vendors,Work,Sunset Photos — Bayfront
+1515,Work,Sunset Photos — Bay,Work,Sunset — East Village Skyline,Work,Golden Hour — Oceanside Pier,Work,Post Best Shot
+1530,Work,Post Best Shot,Work,Sunset Photos,Work,Golden Hour — Oceanside Pier Photos,Work,Post Best Shot + Drive Home
+1545,Work,Post Best Shot + Drive Home,Work,Sunset Photos,Work,Sunset — Oceanside Pier,Work,Drive Home (10 min)
+1600,Commute Home,Drive Home (10 min),Commute Home,Post Best Shot + Drive Home,Commute Home,Sunset — Oceanside Pier Photos,Commute Home,Drive Home
+1615,Commute Home,Drive Home,Commute Home,Drive Home (35 min),Commute Home,Sunset Photos — Oceanside,Commute Home,Home — Bed — Sleep
+1630,Commute Home,Home — Bed — Sleep,Commute Home,Drive Home,Commute Home,Post Best Shot + Drive Home,Commute Home,Sleep
+1645,Home + Eat Burrito + Grab Camera,Sleep,Home + Eat Burrito + Grab Camera,Home — Bed — Sleep,Home + Eat Burrito + Grab Camera,Drive Home (40 min),Home + Eat Burrito,Sleep
+1700,Drive to Third Ave Thursday Night Market (5 min),Sleep,Drive to Chula Vista Community Event (5 min),Sleep,Drive to National City Night Market (10 min),Drive Home,Catch Last Light — Nearest Event (5 min),Sleep
+1715,Third Ave Night Market — Browse + Photos,Sleep,CV Summer Concert Series — Memorial Park,Sleep,National City Night Market — Browse + Photos,Drive Home,Sun Drops — Post Shot + Drive Home,Sleep
+1730,Night Market — Vendor + Crowd Photos,Sleep,Concert Photos — Bands + Crowd,Sleep,Night Market — Food + Culture Photos,Home — Bed — Sleep,Home — Bed — Sleep,Sleep
+1745,Post Best Shot + Drive Home,Sleep,Concert Photos — Golden Hour Light,Sleep,Night Market — Street Scene Photos,Sleep,Sleep,Sleep
+1800,Home — Bed — Sleep,Sleep,Golden Hour — Walk to Bayfront (10 min),Sleep,Golden Hour — Drive to IB Pier (15 min),Sleep,Sleep,Sleep
+1815,Sleep,Sleep,Bayfront — Golden Hour Event / Joggers / Kayakers,Sleep,IB — Drum Circle / Beach Bonfire Crowd,Sleep,Sleep,Sleep
+1830,Sleep,Sleep,Bayfront — Sunset Photos,Sleep,IB — Drum Circle Photos,Sleep,Sleep,Sleep
+1845,Sleep,Sleep,Sunset — Post Best Shot,Sleep,IB — Sunset Bonfire Photos,Sleep,Sleep,Sleep
+1900,Sleep,Sleep,Post Best Shot,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sleep
 1915,Sleep,Sleep,Sun Drops — Drive Home,Sleep,Post Best Shot,Sleep,Sleep,Sleep
 1930,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sun Drops — Drive Home,Sleep,Sleep,Sleep
 1945,Sleep,Sleep,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sleep,Sleep
