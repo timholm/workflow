@@ -1,67 +1,67 @@
-Time,Q1 Weekday (Jan-Mar) Sunset ~1745,Q1 Weekend (Jan-Mar),Q2 Weekday (Apr-Jun) Sunset ~1930,Q2 Weekend (Apr-Jun),Q3 Weekday (Jul-Sep) Sunset ~1945,Q3 Weekend (Jul-Sep),Q4 Weekday (Oct-Dec) Sunset ~1715,Q4 Weekend (Oct-Dec)
-0400,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate,Wake + Hydrate
-0415,Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup)
-0430,Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup),Workout (Bike / Dumbbells),Bike (Light Warmup)
-0445,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera,Workout (Bike / Dumbbells),Pack Gear + Camera
-0500,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready,Cool Down + Stretch,Shower + Get Ready
-0515,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event,Shower + Get Ready,Drive to Event
-0520,Leave House,Drive to Event,Leave House,Drive to Event,Leave House,Drive to Event,Leave House,Drive to Event
-0530,Commute,Drive to November Project — Balboa Park (20 min),Commute,Drive to Ultrabuds Trail Run — Trailhead (30 min),Commute,Drive to SDBC Saturday Ride — Start Point (25 min),Commute,Drive to Surfrider Beach Cleanup — IB (15 min)
-0545,Work,Arrive Balboa Park — Bea Evenson Fountain,Work,Arrive Trailhead,Work,Arrive SDBC Staging Area,Work,Arrive IB Beach — Surfrider Cleanup
-0600,Work,November Project SD Workout (6:29am start),Work,Ultrabuds Trail Run (6:30am start),Work,SDBC Saturday Ride Announcements,Work,Surfrider Beach Cleanup (3rd Sat IB)
-0615,Work,November Project SD Workout,Work,Ultrabuds Trail Run,Work,SDBC Saturday Ride — Roll Out,Work,Surfrider Beach Cleanup
-0630,Work,November Project SD Workout,Work,Ultrabuds Trail Run,Work,SDBC Saturday Group Ride (8:30am),Work,Surfrider Beach Cleanup
-0645,Work,November Project SD — Post-Workout Photos + Community,Work,Ultrabuds Trail Run — Snap Trail Photos,Work,SDBC Saturday Group Ride,Work,Surfrider Beach Cleanup — Snap Group Photos
-0700,Work,Drive to Darkroomers Photowalk — Balboa Park (already there),Work,Ultrabuds Trail Run — Summit / Finish Photos,Work,SDBC Saturday Group Ride,Work,Cleanup Wrap-Up + Group Photo
-0715,Work,Darkroomers Monthly Photowalk (if scheduled),Work,Post-Run Community Hangout + Photos,Work,SDBC Saturday Group Ride,Work,Drive to San Diego Bird Alliance Walk (20 min)
-0730,Work,Darkroomers Photowalk — Balboa Park,Work,Drive to Hillcrest Farmers Market (15 min),Work,SDBC Saturday Group Ride,Work,SD Bird Alliance — Guided Bird Walk
-0745,Work,Darkroomers Photowalk — Balboa Park,Work,Arrive Hillcrest Farmers Market,Work,SDBC Saturday Group Ride,Work,SD Bird Alliance — Bird Walk + Photos
-0800,Work,Darkroomers Photowalk — Group Photos,Work,Hillcrest Farmers Market — Browse + Photos,Work,SDBC Saturday Ride — Mid-Ride Stop,Work,SD Bird Alliance — Bird Walk + Photos
-0815,Work,Drive to Little Italy Mercato (15 min),Work,Hillcrest Farmers Market — Vendor Photos,Work,SDBC Saturday Group Ride,Work,SD Bird Alliance — Bird Walk + Photos
-0830,Work,Little Italy Mercato Farmers Market (Sat 8am-2pm),Work,Hillcrest Farmers Market — Community Photos,Work,SDBC Saturday Ride — Return,Work,Drive to Barrio Logan (15 min)
-0845,Work,Little Italy Mercato — Food Vendor Photos,Work,Drive to SD Photography Collective Outing (varies),Work,SDBC Post-Ride Coffee + Community,Work,Barrio Logan — Chicano Park Murals + Art Walk
-0900,Work,Little Italy Mercato — Craft Stalls + Crowd,Work,SD Photography Collective — Group Shoot,Work,Drive to SD SUP/Kayak Meetup — Point Loma (20 min),Work,Barrio Logan Art Walk — Gallery Photos
-0915,Work,Little Italy Mercato — Snap Community Photos,Work,SD Photography Collective — Group Shoot,Work,Arrive Point Loma — America's Cup Harbor,Work,Barrio Logan — Mural Photos + Artist Talks
-0930,Work,Drive to Coronado (15 min),Work,SD Photography Collective — Location Walk,Work,SD SUP/Kayak Meetup — Saturday Paddle (10am),Work,Drive to Balboa Park (10 min)
-0945,Work,Coronado — Farmers Market / Art Walk (seasonal),Work,SD Photography Collective — Group Critique,Work,SD SUP/Kayak Meetup — Paddle Out,Work,Balboa Park — Sunday OM Experience Yoga (11am prep)
-1000,Work,Coronado Event — Browse + Photos,Work,Drive to Pacific Beach (20 min),Work,SD SUP/Kayak Meetup — Harbor Paddle + Photos,Work,Balboa Park — Explore Gardens + Photo Ops
-1015,Work,Coronado Event — Community Photos,Work,OB Donation Yoga — Ocean Beach Tower 5 (10:30am Sat),Work,SD SUP/Kayak Meetup — Harbor Paddle,Work,Balboa Park — Organ Pavilion Free Concert
-1030,Work,Drive to San Diego Day Hikers Meetup (varies),Work,OB Donation Yoga + Beach Photos,Work,SD SUP/Kayak Meetup — Paddle Back + Photos,Work,Balboa Park — Concert Photos
-1045,Work,SD Day Hikers — Saturday Group Hike,Work,OB Donation Yoga — Post-Session Group Photos,Work,SD SUP/Kayak Meetup — Post-Paddle Hangout,Work,Drive to Chula Vista (15 min)
-1100,Work,SD Day Hikers — Group Hike,Work,Drive to Barrio Logan (15 min),Work,Lunch — Point Loma Seafood,Work,Chula Vista Woman's Club Event (1st Fri / varies)
-1115,Work,SD Day Hikers — Group Hike + Trail Photos,Work,Barrio Logan — Chicano Park Murals,Work,Lunch + Snap Food Photos,Work,Lunch — Third Ave Chula Vista
-1130,Work,SD Day Hikers — Group Hike,Work,Barrio Logan Art Walk (2nd Sat),Work,Drive to No Spandex Saturday Ride (20 min),Work,Lunch + Community Photos
-1145,Work,SD Day Hikers — Summit / Scenic Photos,Work,Barrio Logan — Artist Studio Photos,Work,No Spandex Saturday — Casual Bike Ride (10:45am start),Work,Drive to Pepper Park (10 min)
-1200,Work,SD Day Hikers — Group Photo at Trailhead,Work,Lunch — Barrio Logan Tacos + Food Photos,Work,No Spandex Saturday — Group Ride,Work,Pepper Park — Lowrider Car Shows (seasonal Sat)
-1215,Work,Lunch — Nearby Spot + Group,Work,Drive to Take A Hike! SD Meetup (varies),Work,No Spandex Saturday — Ride + Stops + Photos,Work,Pepper Park — Car Show Photos
-1230,Work,Drive to I Love A Clean SD Cleanup (varies),Work,Take A Hike! SD — Afternoon Hike,Work,No Spandex Saturday — Food Stop,Work,Pepper Park — Community BBQ Photos
-1245,Work,I Love A Clean SD — Beach/Canyon Cleanup,Work,Take A Hike! SD — Group Hike,Work,No Spandex Saturday — Group Photo,Work,Drive to Bayfront (5 min)
-1300,Work,I Love A Clean SD — Cleanup + Group Photos,Work,Take A Hike! SD — Trail Photos,Work,Drive to I Love A Clean SD Cleanup (varies),Work,Bayfront — Community Event Photos
-1315,Work,I Love A Clean SD — Cleanup,Work,Take A Hike! SD — Group Hike,Work,I Love A Clean SD — Beach Cleanup,Work,Golden Hour — Bayfront Park
-1330,Work,Cleanup Wrap-Up + Group Photo,Work,Take A Hike! SD — Scenic Overlook Photos,Work,Beach Cleanup + Group Photos,Work,Golden Hour — Bayfront Park
-1345,Work,Drive to Pepper Park (15 min),Work,Take A Hike! SD — Post-Hike Hangout,Work,Beach Cleanup — Community Photos,Work,Golden Hour — Bay Views
-1400,Work,Pepper Park — Lowrider Shows / Car Meets (seasonal),Work,Drive to Aqua Adventures — Mission Bay (25 min),Work,Cleanup Wrap-Up + Group Photo,Work,Sunset — Bayfront Park
-1415,Work,Pepper Park — Car Show Photos,Work,Aqua Adventures — Wed Night Social Paddle (Sat version),Work,Drive to SD Hiking Group Meetup (varies),Work,Sunset — Post Best Shot
-1430,Work,Pepper Park — Community Photos,Work,Aqua Adventures — Paddle Out on Mission Bay,Work,SD Social Hiking — Afternoon Hike,Work,Post Best Shot + Drive Home
-1445,Work,Golden Hour — Pepper Park Bay Views,Work,Aqua Adventures — Paddle + Bay Photos,Work,SD Social Hiking — Group Hike,Work,Drive Home (10 min)
-1500,Work,Golden Hour — Coronado Bridge Backdrop,Work,Aqua Adventures — Paddle + Bay Photos,Work,SD Social Hiking — Trail Photos,Work,Home — Bed — Sleep
-1515,Work,Sunset — Pepper Park,Work,Aqua Adventures — Post-Paddle Hangout,Work,SD Social Hiking — Group Hike + Photos,Work,Sleep
-1530,Work,Sunset Photos — Post Best Shot,Work,Golden Hour — Mission Bay Photos,Work,SD Social Hiking — Scenic Photos,Work,Sleep
-1545,Work,Post Best Shot + Drive Home,Work,Sunset — Mission Bay,Work,Golden Hour — Post-Hike Location,Work,Sleep
-1600,Commute Home,Drive Home (10 min),Commute Home,Sunset Photos — Mission Bay,Commute Home,Golden Hour — Post-Hike Location,Commute Home,Sleep
-1615,Commute Home,Drive Home,Commute Home,Post Best Shot + Drive Home,Commute Home,Sunset Photos — Post-Hike,Commute Home,Sleep
-1630,Commute Home,Home — Bed — Sleep,Commute Home,Drive Home (25 min),Commute Home,Sunset — Post Best Shot,Commute Home,Sleep
-1645,Home + Eat Burrito + Grab Camera,Sleep,Home + Eat Burrito + Grab Camera,Home — Bed — Sleep,Home + Eat Burrito + Grab Camera,Post Best Shot + Drive Home,Home + Eat Burrito,Sleep
-1700,Drive to CV Run Club — Memorial Park (5 min),Sleep,Drive to Milestone Running — North Park (15 min),Sleep,Drive to Rouleur Cycling Night — North Park (15 min),Drive Home,Catch Last Light — Bayfront (5 min),Sleep
-1715,Chula Vista Run Club (Wed 6pm) / Tuesday Waterfront Run,Sleep,Milestone Hump Day Run Club (Wed 6pm) / Seek Beer Run (Mon 6pm),Sleep,Rouleur Thursday Night Ride (Thu 6pm) / SheWolves (Thu 7:15pm),Home — Bed — Sleep,Sun Drops — Post Shot + Drive Home,Sleep
-1730,Run Club — Group Run + Photos,Sleep,Milestone Run — 3-5 Mile Loop + Photos,Sleep,Night Ride — 17 Mile Route + Photos,Sleep,Home — Bed — Sleep,Sleep
-1745,Post Best Shot + Drive Home,Sleep,Run Club — Post-Run Raffle + Community,Sleep,Night Ride — Group Ride Photos,Sleep,Sleep,Sleep
-1800,Home — Bed — Sleep,Sleep,Golden Hour — Walk to Nearby Spot,Sleep,Night Ride — Post-Ride Beer + Community,Sleep,Sleep,Sleep
-1815,Sleep,Sleep,Golden Hour — Snap Photos,Sleep,Golden Hour Photos — Ride Route,Sleep,Sleep,Sleep
-1830,Sleep,Sleep,Sunset — Post Best Shot,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sleep
-1845,Sleep,Sleep,Sunset — Post Best Shot,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sleep
-1900,Sleep,Sleep,Post Best Shot + Drive Home,Sleep,Post Best Shot + Drive Home,Sleep,Sleep,Sleep
-1915,Sleep,Sleep,Drive Home,Sleep,Drive Home,Sleep,Sleep,Sleep
-1930,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sun Drops — Drive Home,Sleep,Sleep,Sleep
-1945,Sleep,Sleep,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sleep,Sleep
-2000,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
+Time,Q1 Weekday (Jan-Mar) Sunset ~1745,Q1 Saturday,Q1 Sunday (Batch Day),Q2 Weekday (Apr-Jun) Sunset ~1930,Q2 Saturday,Q2 Sunday (Batch Day),Q3 Weekday (Jul-Sep) Sunset ~1945,Q3 Saturday,Q3 Sunday (Batch Day),Q4 Weekday (Oct-Dec) Sunset ~1715,Q4 Saturday,Q4 Sunday (Batch Day)
+0400,Wake + Hydrate,Wake + Hydrate,Sleep In,Wake + Hydrate,Wake + Hydrate,Sleep In,Wake + Hydrate,Wake + Hydrate,Sleep In,Wake + Hydrate,Wake + Hydrate,Sleep In
+0415,Workout (Bike / Dumbbells),Pack Gear + Camera,Sleep In,Workout (Bike / Dumbbells),Pack Gear + Camera,Sleep In,Workout (Bike / Dumbbells),Pack Gear + Camera,Sleep In,Workout (Bike / Dumbbells),Pack Gear + Camera,Sleep In
+0430,Workout (Bike / Dumbbells),Shower + Get Ready,Sleep In,Workout (Bike / Dumbbells),Shower + Get Ready,Sleep In,Workout (Bike / Dumbbells),Shower + Get Ready,Sleep In,Workout (Bike / Dumbbells),Shower + Get Ready,Sleep In
+0445,Workout (Bike / Dumbbells),Drive to Balboa Park (20 min),Sleep In,Workout (Bike / Dumbbells),Drive to Balboa Park (20 min),Sleep In,Workout (Bike / Dumbbells),Drive to Balboa Park (20 min),Sleep In,Workout (Bike / Dumbbells),Drive to Balboa Park (20 min),Sleep In
+0500,Cool Down + Stretch,Drive to Balboa Park,Sleep In,Cool Down + Stretch,Drive to Balboa Park,Sleep In,Cool Down + Stretch,Drive to Balboa Park,Sleep In,Cool Down + Stretch,Drive to Balboa Park,Sleep In
+0515,Shower + Get Ready,Arrive — Bea Evenson Fountain,Sleep In,Shower + Get Ready,Arrive — Bea Evenson Fountain,Sleep In,Shower + Get Ready,Arrive — Bea Evenson Fountain,Sleep In,Shower + Get Ready,Arrive — Bea Evenson Fountain,Sleep In
+0520,Leave House,Warm Up + Meet the Crew,Sleep In,Leave House,Warm Up + Meet the Crew,Sleep In,Leave House,Warm Up + Meet the Crew,Sleep In,Leave House,Warm Up + Meet the Crew,Sleep In
+0530,Commute,CORE: November Project SD (6:29am),Wake + Hydrate,Commute,CORE: November Project SD (6:29am),Wake + Hydrate,Commute,CORE: November Project SD (6:29am),Wake + Hydrate,Commute,CORE: November Project SD (6:29am),Wake + Hydrate
+0545,Work,November Project SD Workout,Slow Morning — Coffee + Breakfast,Work,November Project SD Workout,Slow Morning — Coffee + Breakfast,Work,November Project SD Workout,Slow Morning — Coffee + Breakfast,Work,November Project SD Workout,Slow Morning — Coffee + Breakfast
+0600,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning
+0615,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning,Work,November Project SD Workout,Slow Morning
+0630,Work,NPSD — Post-Workout Hang + Group Photos,Grocery Run,Work,NPSD — Post-Workout Hang + Group Photos,Grocery Run,Work,NPSD — Post-Workout Hang + Group Photos,Grocery Run,Work,NPSD — Post-Workout Hang + Group Photos,Grocery Run
+0645,Work,NPSD — Community Time (this is where bonds form),Grocery Run,Work,NPSD — Community Time (this is where bonds form),Grocery Run,Work,NPSD — Community Time (this is where bonds form),Grocery Run,Work,NPSD — Community Time (this is where bonds form),Grocery Run
+0700,Work,Drive to Seasonal Event,Grocery Run,Work,Drive to Seasonal Event,Grocery Run,Work,Drive to Seasonal Event,Grocery Run,Work,Drive to Seasonal Event,Grocery Run
+0715,Work,SEASONAL: SD Day Hikers — Group Hike,Meal Prep Burritos,Work,SEASONAL: Aqua Adventures — Paddle to Mission Bay,Meal Prep Burritos,Work,SEASONAL: SDBC Saturday Ride (8:30am staging),Meal Prep Burritos,Work,SEASONAL: Surfrider Beach Cleanup — IB (9am),Meal Prep Burritos
+0730,Work,SD Day Hikers — Group Hike,Meal Prep Burritos,Work,Aqua Adventures — Paddle Prep,Meal Prep Burritos,Work,SDBC Saturday Ride — Announcements,Meal Prep Burritos,Work,Surfrider Beach Cleanup,Meal Prep Burritos
+0745,Work,SD Day Hikers — Group Hike,Meal Prep Burritos,Work,Aqua Adventures — Paddle Out,Meal Prep Burritos,Work,SDBC Saturday Ride — Roll Out,Meal Prep Burritos,Work,Surfrider Beach Cleanup,Meal Prep Burritos
+0800,Work,SD Day Hikers — Trail Photos,Meal Prep Burritos,Work,Aqua Adventures — Bay Paddle + Photos,Meal Prep Burritos,Work,SDBC Saturday Group Ride,Meal Prep Burritos,Work,Surfrider Cleanup — Group Photos,Meal Prep Burritos
+0815,Work,SD Day Hikers — Group Hike,Meal Prep Burritos,Work,Aqua Adventures — Bay Paddle + Photos,Meal Prep Burritos,Work,SDBC Saturday Group Ride,Batch Edit Photos — Pick Best from Week,Work,Surfrider Beach Cleanup,Batch Edit Photos — Pick Best from Week
+0830,Work,SD Day Hikers — Group Hike,Batch Edit Photos — Pick Best from Week,Work,Aqua Adventures — Bay Paddle,Batch Edit Photos — Pick Best from Week,Work,SDBC Saturday Group Ride,Batch Edit Photos,Work,Cleanup Wrap-Up + Group Photo,Batch Edit Photos
+0845,Work,SD Day Hikers — Summit + Group Photo,Batch Edit Photos,Work,Aqua Adventures — Paddle Back,Batch Edit Photos,Work,SDBC Saturday Group Ride,Batch Edit Photos,Work,Free Time — Explore IB Pier,Batch Edit Photos
+0900,Work,SD Day Hikers — Post-Hike Hangout,Batch Edit Photos,Work,Aqua Adventures — Post-Paddle Hangout + Photos,Batch Edit Photos,Work,SDBC Saturday Group Ride,Schedule Week's Mastodon Posts (AI queue),Work,Free Time — IB Boardwalk Photos,Schedule Week's Mastodon Posts (AI queue)
+0915,Work,Free Time — Explore Area Near Trailhead,Schedule Week's Mastodon Posts (AI queue),Work,Free Time — Mission Bay Walk + Photos,Schedule Week's Mastodon Posts (AI queue),Work,SDBC Saturday Ride — Mid-Ride Stop,Schedule Posts,Work,Free Time — IB Community,Schedule Posts
+0930,Work,Free Time — Snap Photos,Schedule Posts,Work,Free Time — Mission Bay Photos,Schedule Posts,Work,SDBC Saturday Group Ride,Review AI Engagement — Approve Replies,Work,Drive Home (15 min),Review AI Engagement — Approve Replies
+0945,Work,Free Time — Snap Photos,Review AI Engagement — Approve Replies,Work,Free Time — Snap Photos,Review AI Engagement — Approve Replies,Work,SDBC Saturday Group Ride,Review Engagement Tracker CSV,Work,Arrive Home,Review Engagement Tracker CSV
+1000,Work,Lunch — Nearby Spot with Hiking Group,Review Engagement Tracker CSV,Work,Lunch — Mission Bay Area,Review Engagement Tracker CSV,Work,SDBC Saturday Ride — Return,Update Engagement Tracker CSV,Work,Free Time — Relax,Update Engagement Tracker CSV
+1015,Work,Lunch + Food Photos,Update Engagement Tracker CSV,Work,Lunch + Food Photos,Update Engagement Tracker CSV,Work,SDBC Post-Ride Coffee + Community,Free Time — Personal Projects,Work,Free Time — Relax,Free Time — Personal Projects
+1030,Work,Free Time — Wander + Explore + Photos,Free Time — Personal Projects,Work,Free Time — Wander PB/OB + Photos,Free Time — Personal Projects,Work,Free Time — Explore Area + Photos,Free Time — Personal Projects,Work,Free Time — Relax,Free Time — Personal Projects
+1045,Work,Free Time — Community Interaction,Free Time — Personal Projects,Work,Free Time — Community Interaction,Free Time — Personal Projects,Work,Free Time — Community Interaction,Free Time — Relax,Work,Free Time — Relax,Free Time — Relax
+1100,Work,Free Time — Snap Photos,Free Time — Relax,Work,Free Time — Snap Photos,Free Time — Relax,Work,Free Time — Snap Photos,Free Time — Relax,Work,Golden Hour — Bayfront Park (5 min),Free Time — Relax
+1115,Work,Free Time — Explore,Free Time — Relax,Work,Free Time — Explore,Free Time — Relax,Work,Free Time — Explore,Free Time — Relax,Work,Golden Hour — Bayfront Photos,Free Time — Relax
+1130,Work,Free Time — Explore,Free Time — Relax,Work,Free Time — Explore,Free Time — Relax,Work,Free Time — Explore,Free Time — Relax,Work,Golden Hour — Bayfront Photos,Free Time — Relax
+1145,Work,Free Time — Explore,Lunch,Work,Free Time — Explore,Lunch,Work,Free Time — Explore,Lunch,Work,Sunset — Bayfront Park,Lunch
+1200,Work,Free Time — Explore + Photos,Lunch,Work,Free Time — Explore + Photos,Lunch,Work,Free Time — Explore + Photos,Lunch,Work,Sunset — Post Best Shot,Lunch
+1215,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors (No Camera),Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors (No Camera),Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors (No Camera),Work,Post Best Shot + Drive Home,Free Time — Walk / Outdoors (No Camera)
+1230,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Drive Home (5 min),Free Time — Walk / Outdoors
+1245,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Free Time — Explore + Photos,Free Time — Walk / Outdoors,Work,Home — Bed — Sleep,Free Time — Walk / Outdoors
+1300,Work,Golden Hour — Current Location,Free Time — Walk / Outdoors,Work,Golden Hour — Current Location,Free Time — Walk / Outdoors,Work,Golden Hour — Current Location,Free Time — Walk / Outdoors,Work,Sleep,Free Time — Walk / Outdoors
+1315,Work,Golden Hour Photos,Free Time — Relax,Work,Golden Hour Photos,Free Time — Relax,Work,Golden Hour Photos,Free Time — Relax,Work,Sleep,Free Time — Relax
+1330,Work,Golden Hour Photos,Free Time — Relax,Work,Golden Hour Photos,Free Time — Relax,Work,Golden Hour Photos,Free Time — Relax,Work,Sleep,Free Time — Relax
+1345,Work,Golden Hour Photos,Prep for Monday (Clothes + Bag),Work,Golden Hour Photos,Prep for Monday (Clothes + Bag),Work,Golden Hour Photos,Prep for Monday (Clothes + Bag),Work,Sleep,Prep for Monday (Clothes + Bag)
+1400,Work,Sunset — Current Location,Prep for Monday,Work,Golden Hour Photos,Prep for Monday,Work,Golden Hour Photos,Prep for Monday,Work,Sleep,Prep for Monday
+1415,Work,Sunset Photos,Early Wind Down,Work,Golden Hour Photos,Early Wind Down,Work,Golden Hour Photos,Early Wind Down,Work,Sleep,Early Wind Down
+1430,Work,Sunset — Post Best Shot,Early Wind Down,Work,Sunset Photos,Early Wind Down,Work,Sunset Photos,Early Wind Down,Work,Sleep,Early Wind Down
+1445,Work,Post Best Shot + Drive Home,Bed — Sleep,Work,Sunset Photos,Bed — Sleep,Work,Sunset Photos,Bed — Sleep,Work,Sleep,Bed — Sleep
+1500,Work,Drive Home,Sleep,Work,Sunset — Post Best Shot,Sleep,Work,Sunset — Post Best Shot,Sleep,Work,Sleep,Sleep
+1515,Work,Drive Home,Sleep,Work,Post Best Shot + Drive Home,Sleep,Work,Post Best Shot + Drive Home,Sleep,Work,Sleep,Sleep
+1530,Work,Home — Bed — Sleep,Sleep,Work,Drive Home,Sleep,Work,Drive Home,Sleep,Work,Sleep,Sleep
+1545,Work,Sleep,Sleep,Work,Drive Home,Sleep,Work,Drive Home,Sleep,Work,Sleep,Sleep
+1600,Commute Home,Sleep,Sleep,Commute Home,Home — Bed — Sleep,Sleep,Commute Home,Home — Bed — Sleep,Sleep,Commute Home,Sleep,Sleep
+1615,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep
+1630,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep,Commute Home,Sleep,Sleep
+1645,Home + Eat Burrito + Grab Camera,Sleep,Sleep,Home + Eat Burrito + Grab Camera,Sleep,Sleep,Home + Eat Burrito + Grab Camera,Sleep,Sleep,Home + Eat Burrito,Sleep,Sleep
+1700,CORE: CV Run Club — Memorial Park (5 min),Sleep,Sleep,CORE: CV Run Club — Memorial Park (5 min),Sleep,Sleep,CORE: CV Run Club — Memorial Park (5 min),Sleep,Sleep,CORE: CV Run Club — Memorial Park (5 min),Sleep,Sleep
+1715,CV Run Club — Group Run + Photos,Sleep,Sleep,CV Run Club — Group Run + Photos,Sleep,Sleep,CV Run Club — Group Run + Photos,Sleep,Sleep,CV Run Club — Group Run + Photos,Sleep,Sleep
+1730,CV Run Club — Post-Run Hang + Photos,Sleep,Sleep,CV Run Club — Post-Run Hang + Photos,Sleep,Sleep,CV Run Club — Post-Run Hang + Photos,Sleep,Sleep,Post Best Shot + Drive Home,Sleep,Sleep
+1745,Post Best Shot + Drive Home,Sleep,Sleep,CV Run Club — Post-Run Community,Sleep,Sleep,CV Run Club — Post-Run Community,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sleep
+1800,Home — Bed — Sleep,Sleep,Sleep,Golden Hour — Walk Nearby + Snap Photos,Sleep,Sleep,Golden Hour — Walk Nearby + Snap Photos,Sleep,Sleep,Sleep,Sleep,Sleep
+1815,Sleep,Sleep,Sleep,Golden Hour Photos,Sleep,Sleep,Golden Hour Photos,Sleep,Sleep,Sleep,Sleep,Sleep
+1830,Sleep,Sleep,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sleep,Sleep,Sleep
+1845,Sleep,Sleep,Sleep,Post Best Shot + Drive Home,Sleep,Sleep,Sunset — Post Best Shot,Sleep,Sleep,Sleep,Sleep,Sleep
+1900,Sleep,Sleep,Sleep,Drive Home,Sleep,Sleep,Post Best Shot + Drive Home,Sleep,Sleep,Sleep,Sleep,Sleep
+1915,Sleep,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sleep,Drive Home,Sleep,Sleep,Sleep,Sleep,Sleep
+1930,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Home — Bed — Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
+1945,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
+2000,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep,Sleep
