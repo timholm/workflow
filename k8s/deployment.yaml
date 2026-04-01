@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: holm-bot
+  namespace: holm-community
+  labels:
+    app: holm-bot
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: holm-bot
+  template:
+    metadata:
+      labels:
+        app: holm-bot
+    spec:
+      containers:
+        - name: holm-bot
+          image: ghcr.io/timholm/workflow:latest
+          imagePullPolicy: Always
+          env:
+            - name: MASTODON_BASE_URL
+              value: "https://holm.community"
+            - name: MASTODON_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: holm-bot-secrets
+                  key: MASTODON_ACCESS_TOKEN
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: holm-bot-secrets
+                  key: ANTHROPIC_API_KEY
+            - name: CONTENT_DIR
+              value: "/holm-content"
+            - name: DATA_DIR
+              value: "/data"
+            - name: MAX_BOOSTS_PER_DAY
+              value: "10"
+            - name: MAX_FOLLOWS_PER_DAY
+              value: "5"
+            - name: MAX_REPLIES_PER_DAY
+              value: "10"
+          volumeMounts:
+            - name: holm-content
+              mountPath: /holm-content
+            - name: holm-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: holm-content
+          persistentVolumeClaim:
+            claimName: holm-content-pvc
+        - name: holm-data
+          persistentVolumeClaim:
+            claimName: holm-data-pvc
