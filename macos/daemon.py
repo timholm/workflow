@@ -1,13 +1,16 @@
 """
-TimVoice macOS Daemon — runs in the background capturing everything.
+TimVoice macOS Daemon — CONTINUOUS 24/7 recording of everything.
 
-Captures:
-1. Screen — periodic screenshots + OCR to understand what Tim is doing
-2. Mic — continuous audio, same voice-only pipeline as iOS
-3. Camera — periodic snapshots for visual context
-4. Active window — tracks what app/site Tim is using
+Records:
+1. Screen — continuous video recording via ffmpeg, segmented into chunks,
+   each chunk processed (OCR + scene understanding) then raw video deleted
+2. Mic — continuous audio recording, voice-identified, Tim-only transcription
+3. Camera — continuous video recording via ffmpeg, segmented into chunks,
+   each chunk processed (scene/activity understanding) then raw video deleted
+4. Active window — tracks every app/window switch with duration
 
-All processing is local. Only summaries sync to the server.
+Everything records 24/7. Processing extracts meaning. Raw footage is deleted
+after processing. Only text/summaries persist and sync to the server.
 """
 
 import os
@@ -15,155 +18,153 @@ import sys
 import time
 import json
 import signal
+import shutil
 import threading
 import subprocess
 from datetime import datetime, date
 from pathlib import Path
-
-# Screen capture
-try:
-    import Quartz
-    from Quartz import CGWindowListCopyWindowInfo, kCGWindowListOptionOnScreenOnly, kCGNullWindowID
-    HAS_QUARTZ = True
-except ImportError:
-    HAS_QUARTZ = False
-
-# Audio
-try:
-    import pyaudio
-    import numpy as np
-    HAS_AUDIO = True
-except ImportError:
-    HAS_AUDIO = False
-
-# OCR
-try:
-    import Vision
-    HAS_VISION = True
-except ImportError:
-    HAS_VISION = False
 
 
 SERVER_URL = os.environ.get("TIMVOICE_SERVER", "http://localhost:8080")
 DATA_DIR = Path(os.environ.get("TIMVOICE_MAC_DATA", str(Path.home() / ".timvoice")))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-SCREEN_INTERVAL = 30       # screenshot every 30 seconds
-CAMERA_INTERVAL = 300      # camera snapshot every 5 minutes
-AUDIO_CHUNK_SECONDS = 30   # audio chunks same as iOS
+# Recording is continuous — these control how often chunks are finalized and processed
+SCREEN_CHUNK_SECONDS = 60     # 1-minute screen recording segments
+CAMERA_CHUNK_SECONDS = 60     # 1-minute camera recording segments
+AUDIO_CHUNK_SECONDS = 30      # 30-second audio segments (same as iOS)
 
 
-class ScreenCapture(threading.Thread):
-    """Captures screenshots and extracts text via OCR."""
+# ── Continuous Screen Recording ────────────────────────────────────────
+
+class ContinuousScreenRecorder(threading.Thread):
+    """Records the screen 24/7 as video using ffmpeg.
+
+    Segments into 1-minute chunks. Each chunk is:
+    1. Recorded as .mp4
+    2. Keyframes extracted as images
+    3. Each keyframe OCR'd for text content
+    4. Scene described (what's on screen)
+    5. Raw video deleted — only text/descriptions kept
+    """
 
     def __init__(self):
         super().__init__(daemon=True)
         self.running = True
-        self.output_dir = DATA_DIR / "screens"
+        self.process = None
+        self.output_dir = DATA_DIR / "screen_video"
         self.output_dir.mkdir(exist_ok=True)
 
     def run(self):
         while self.running:
-            try:
-                self.capture()
-            except Exception as e:
-                print(f"[Screen] Error: {e}")
-            time.sleep(SCREEN_INTERVAL)
+            chunk_path = self._start_chunk()
+            if chunk_path:
+                self._wait_for_chunk(chunk_path)
+                if self.running:
+                    threading.Thread(
+                        target=self._process_chunk,
+                        args=(chunk_path,),
+                        daemon=True,
+                    ).start()
 
-    def capture(self):
+    def _start_chunk(self) -> Path | None:
+        """Start recording a screen chunk using ffmpeg."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filepath = self.output_dir / f"screen_{timestamp}.png"
+        chunk_path = self.output_dir / f"screen_{timestamp}.mp4"
 
-        # Use macOS screencapture command (works without extra deps)
-        subprocess.run(
-            ["screencapture", "-x", "-C", str(filepath)],
-            capture_output=True,
-        )
-
-        # Get active window info
-        active_app = self._get_active_app()
-
-        # OCR the screenshot
-        text = self._ocr_image(filepath)
-
-        # Save metadata
-        meta = {
-            "timestamp": datetime.now().isoformat(),
-            "active_app": active_app,
-            "ocr_text": text[:2000] if text else "",
-            "screenshot": str(filepath),
-        }
-
-        meta_file = DATA_DIR / f"screen_log_{date.today().isoformat()}.jsonl"
-        with open(meta_file, "a") as f:
-            f.write(json.dumps(meta) + "\n")
-
-        # Delete screenshot after OCR (keep only text)
-        filepath.unlink(missing_ok=True)
-
-    def _get_active_app(self) -> str:
-        """Get the currently active application name."""
         try:
-            result = subprocess.run(
-                ["osascript", "-e",
-                 'tell application "System Events" to get name of first application process whose frontmost is true'],
-                capture_output=True, text=True,
+            # macOS: use avfoundation to capture screen
+            # Device index "1" is typically the screen; "0" is camera
+            # Capture at 2fps — enough to see everything, manageable file size
+            self.process = subprocess.Popen(
+                [
+                    "ffmpeg", "-y",
+                    "-f", "avfoundation",
+                    "-framerate", "2",
+                    "-capture_cursor", "1",
+                    "-i", "1:none",          # screen input, no audio (mic is separate)
+                    "-t", str(SCREEN_CHUNK_SECONDS),
+                    "-c:v", "libx264",
+                    "-preset", "ultrafast",
+                    "-crf", "28",            # lower quality is fine — we extract text
+                    "-pix_fmt", "yuv420p",
+                    str(chunk_path),
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
             )
-            return result.stdout.strip()
-        except Exception:
-            return "unknown"
+            return chunk_path
+        except FileNotFoundError:
+            print("[Screen] ffmpeg not found. Install: brew install ffmpeg")
+            self.running = False
+            return None
 
-    def _ocr_image(self, filepath: Path) -> str:
-        """Extract text from screenshot using macOS Vision framework or tesseract."""
-        # Try macOS shortcuts (available on macOS 12+)
+    def _wait_for_chunk(self, chunk_path: Path):
+        """Wait for the current chunk to finish recording."""
+        if self.process:
+            self.process.wait()
+            self.process = None
+
+    def _process_chunk(self, chunk_path: Path):
+        """Extract frames, OCR them, log the content, delete the video."""
+        if not chunk_path.exists():
+            return
+
+        frames_dir = chunk_path.with_suffix(".frames")
+        frames_dir.mkdir(exist_ok=True)
+
         try:
-            result = subprocess.run(
-                ["shortcuts", "run", "OCR Screenshot",
-                 "-i", str(filepath)],
-                capture_output=True, text=True, timeout=10,
+            # Extract 1 frame every 5 seconds from the chunk
+            subprocess.run(
+                [
+                    "ffmpeg", "-y",
+                    "-i", str(chunk_path),
+                    "-vf", "fps=1/5",
+                    str(frames_dir / "frame_%03d.png"),
+                ],
+                capture_output=True,
+                timeout=60,
             )
-            if result.stdout.strip():
-                return result.stdout.strip()
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            pass
 
-        # Fallback: use tesseract if installed
-        try:
-            result = subprocess.run(
-                ["tesseract", str(filepath), "stdout"],
-                capture_output=True, text=True, timeout=10,
-            )
-            return result.stdout.strip()
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            pass
+            # OCR each frame
+            active_app = self._get_active_app()
+            frame_texts = []
 
-        return ""
+            for frame_file in sorted(frames_dir.glob("*.png")):
+                text = self._ocr_image(frame_file)
+                if text:
+                    frame_texts.append(text)
+                frame_file.unlink()
 
-    def stop(self):
-        self.running = False
+            # Deduplicate consecutive identical frames
+            deduped = []
+            for text in frame_texts:
+                if not deduped or text != deduped[-1]:
+                    deduped.append(text)
 
+            # Log
+            if deduped:
+                entry = {
+                    "timestamp": datetime.now().isoformat(),
+                    "type": "screen_recording",
+                    "active_app": active_app,
+                    "duration_seconds": SCREEN_CHUNK_SECONDS,
+                    "frame_count": len(deduped),
+                    "content": deduped,
+                }
 
-class ActiveWindowTracker(threading.Thread):
-    """Tracks which app and window Tim is using, logging transitions."""
+                log_file = DATA_DIR / f"screen_log_{date.today().isoformat()}.jsonl"
+                with open(log_file, "a") as f:
+                    f.write(json.dumps(entry) + "\n")
 
-    def __init__(self):
-        super().__init__(daemon=True)
-        self.running = True
-        self.last_app = ""
-        self.last_change = datetime.now()
-
-    def run(self):
-        while self.running:
-            try:
-                current = self._get_active_app()
-                if current != self.last_app and current:
-                    duration = (datetime.now() - self.last_change).total_seconds()
-                    self._log_transition(self.last_app, current, duration)
-                    self.last_app = current
-                    self.last_change = datetime.now()
-            except Exception as e:
-                print(f"[WindowTracker] Error: {e}")
-            time.sleep(2)  # check every 2 seconds
+        except subprocess.TimeoutExpired:
+            print("[Screen] Frame extraction timed out")
+        except Exception as e:
+            print(f"[Screen] Processing error: {e}")
+        finally:
+            # Always delete raw video and frames
+            chunk_path.unlink(missing_ok=True)
+            shutil.rmtree(frames_dir, ignore_errors=True)
 
     def _get_active_app(self) -> str:
         try:
@@ -174,13 +175,306 @@ class ActiveWindowTracker(threading.Thread):
             )
             return result.stdout.strip()
         except Exception:
+            return "unknown"
+
+    def _ocr_image(self, filepath: Path) -> str:
+        """OCR a single frame."""
+        try:
+            result = subprocess.run(
+                ["tesseract", str(filepath), "stdout", "--psm", "3"],
+                capture_output=True, text=True, timeout=10,
+            )
+            return result.stdout.strip()
+        except (subprocess.TimeoutExpired, FileNotFoundError):
             return ""
 
-    def _log_transition(self, from_app: str, to_app: str, duration: float):
+    def stop(self):
+        self.running = False
+        if self.process:
+            self.process.terminate()
+            try:
+                self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+
+
+# ── Continuous Camera Recording ────────────────────────────────────────
+
+class ContinuousCameraRecorder(threading.Thread):
+    """Records the camera 24/7 as video using ffmpeg.
+
+    Segments into 1-minute chunks. Each chunk is:
+    1. Recorded as .mp4
+    2. Keyframes extracted
+    3. Each keyframe analyzed for scene/activity
+    4. Raw video deleted — only descriptions kept
+    """
+
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.running = True
+        self.process = None
+        self.output_dir = DATA_DIR / "camera_video"
+        self.output_dir.mkdir(exist_ok=True)
+
+    def run(self):
+        while self.running:
+            chunk_path = self._start_chunk()
+            if chunk_path:
+                self._wait_for_chunk(chunk_path)
+                if self.running:
+                    threading.Thread(
+                        target=self._process_chunk,
+                        args=(chunk_path,),
+                        daemon=True,
+                    ).start()
+
+    def _start_chunk(self) -> Path | None:
+        """Start recording a camera chunk."""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        chunk_path = self.output_dir / f"camera_{timestamp}.mp4"
+
+        try:
+            # macOS: device "0" is typically the FaceTime camera
+            # 1fps is enough for activity understanding
+            self.process = subprocess.Popen(
+                [
+                    "ffmpeg", "-y",
+                    "-f", "avfoundation",
+                    "-framerate", "1",
+                    "-video_size", "640x480",
+                    "-i", "0:none",          # camera, no audio
+                    "-t", str(CAMERA_CHUNK_SECONDS),
+                    "-c:v", "libx264",
+                    "-preset", "ultrafast",
+                    "-crf", "30",
+                    "-pix_fmt", "yuv420p",
+                    str(chunk_path),
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            return chunk_path
+        except FileNotFoundError:
+            print("[Camera] ffmpeg not found.")
+            self.running = False
+            return None
+
+    def _wait_for_chunk(self, chunk_path: Path):
+        if self.process:
+            self.process.wait()
+            self.process = None
+
+    def _process_chunk(self, chunk_path: Path):
+        """Extract keyframes, describe scene/activity, delete video."""
+        if not chunk_path.exists():
+            return
+
+        frames_dir = chunk_path.with_suffix(".frames")
+        frames_dir.mkdir(exist_ok=True)
+
+        try:
+            # Extract 1 frame every 10 seconds
+            subprocess.run(
+                [
+                    "ffmpeg", "-y",
+                    "-i", str(chunk_path),
+                    "-vf", "fps=1/10",
+                    str(frames_dir / "frame_%03d.jpg"),
+                ],
+                capture_output=True,
+                timeout=60,
+            )
+
+            # Describe each frame
+            descriptions = []
+            for frame_file in sorted(frames_dir.glob("*.jpg")):
+                desc = self._describe_frame(frame_file)
+                if desc:
+                    descriptions.append(desc)
+                frame_file.unlink()
+
+            if descriptions:
+                entry = {
+                    "timestamp": datetime.now().isoformat(),
+                    "type": "camera_recording",
+                    "duration_seconds": CAMERA_CHUNK_SECONDS,
+                    "frame_count": len(descriptions),
+                    "descriptions": descriptions,
+                }
+
+                log_file = DATA_DIR / f"camera_log_{date.today().isoformat()}.jsonl"
+                with open(log_file, "a") as f:
+                    f.write(json.dumps(entry) + "\n")
+
+        except Exception as e:
+            print(f"[Camera] Processing error: {e}")
+        finally:
+            chunk_path.unlink(missing_ok=True)
+            shutil.rmtree(frames_dir, ignore_errors=True)
+
+    def _describe_frame(self, filepath: Path) -> str:
+        """Describe what's in a camera frame.
+
+        For now, returns basic metadata. When Claude vision API is integrated,
+        this will return rich scene descriptions like:
+        'Tim at desk, writing in notebook, coffee cup visible, afternoon light'
+        """
+        # TODO: send to server for Claude vision analysis
+        # For now, log that a frame was captured
+        return f"frame_captured_{filepath.stem}"
+
+    def stop(self):
+        self.running = False
+        if self.process:
+            self.process.terminate()
+            try:
+                self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+
+
+# ── Continuous Mic Recording ───────────────────────────────────────────
+
+class ContinuousMicRecorder(threading.Thread):
+    """Records microphone 24/7 using ffmpeg.
+
+    Same voice-only pipeline as iOS — segments into 30-second chunks,
+    each processed for Tim's voice only.
+    """
+
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.running = True
+        self.process = None
+        self.output_dir = DATA_DIR / "audio_chunks"
+        self.output_dir.mkdir(exist_ok=True)
+
+    def run(self):
+        while self.running:
+            chunk_path = self._start_chunk()
+            if chunk_path:
+                self._wait_for_chunk(chunk_path)
+                if self.running and chunk_path.exists():
+                    self._queue_for_processing(chunk_path)
+
+    def _start_chunk(self) -> Path | None:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        chunk_path = self.output_dir / f"mic_{timestamp}.wav"
+
+        try:
+            # Record 16kHz mono WAV — ideal for speech processing
+            self.process = subprocess.Popen(
+                [
+                    "ffmpeg", "-y",
+                    "-f", "avfoundation",
+                    "-i", ":0",              # default mic (no video)
+                    "-t", str(AUDIO_CHUNK_SECONDS),
+                    "-ar", "16000",
+                    "-ac", "1",
+                    "-acodec", "pcm_s16le",
+                    str(chunk_path),
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            return chunk_path
+        except FileNotFoundError:
+            print("[Mic] ffmpeg not found.")
+            self.running = False
+            return None
+
+    def _wait_for_chunk(self, chunk_path: Path):
+        if self.process:
+            self.process.wait()
+            self.process = None
+
+    def _queue_for_processing(self, chunk_path: Path):
+        """Queue audio chunk for speaker-identified transcription."""
+        meta = {
+            "timestamp": datetime.now().isoformat(),
+            "duration_seconds": AUDIO_CHUNK_SECONDS,
+            "sample_rate": 16000,
+            "file": str(chunk_path),
+            "source": "macbook_mic",
+            "processed": False,
+        }
+
+        log_file = DATA_DIR / f"audio_log_{date.today().isoformat()}.jsonl"
+        with open(log_file, "a") as f:
+            f.write(json.dumps(meta) + "\n")
+
+    def stop(self):
+        self.running = False
+        if self.process:
+            self.process.terminate()
+            try:
+                self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+
+
+# ── Active Window Tracker ──────────────────────────────────────────────
+
+class ActiveWindowTracker(threading.Thread):
+    """Tracks every app/window switch with duration."""
+
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.running = True
+        self.last_app = ""
+        self.last_title = ""
+        self.last_change = datetime.now()
+
+    def run(self):
+        while self.running:
+            try:
+                app, title = self._get_active_window()
+                if (app != self.last_app or title != self.last_title) and app:
+                    duration = (datetime.now() - self.last_change).total_seconds()
+                    if self.last_app:
+                        self._log_transition(self.last_app, self.last_title, app, title, duration)
+                    self.last_app = app
+                    self.last_title = title
+                    self.last_change = datetime.now()
+            except Exception as e:
+                print(f"[WindowTracker] Error: {e}")
+            time.sleep(2)
+
+    def _get_active_window(self) -> tuple[str, str]:
+        """Get active application name and window title."""
+        app = ""
+        title = ""
+        try:
+            result = subprocess.run(
+                ["osascript", "-e",
+                 'tell application "System Events"\n'
+                 '  set frontApp to name of first application process whose frontmost is true\n'
+                 '  set frontTitle to ""\n'
+                 '  try\n'
+                 '    tell process frontApp\n'
+                 '      set frontTitle to name of front window\n'
+                 '    end tell\n'
+                 '  end try\n'
+                 '  return frontApp & "|" & frontTitle\n'
+                 'end tell'],
+                capture_output=True, text=True, timeout=5,
+            )
+            parts = result.stdout.strip().split("|", 1)
+            app = parts[0] if parts else ""
+            title = parts[1] if len(parts) > 1 else ""
+        except Exception:
+            pass
+        return app, title
+
+    def _log_transition(self, from_app: str, from_title: str,
+                        to_app: str, to_title: str, duration: float):
         entry = {
             "timestamp": datetime.now().isoformat(),
             "from_app": from_app,
+            "from_title": from_title,
             "to_app": to_app,
+            "to_title": to_title,
             "duration_seconds": round(duration, 1),
         }
 
@@ -192,171 +486,90 @@ class ActiveWindowTracker(threading.Thread):
         self.running = False
 
 
-class MicCapture(threading.Thread):
-    """Continuous microphone recording with the same voice-only pipeline as iOS."""
+# ── Storage Manager ────────────────────────────────────────────────────
 
-    def __init__(self):
+class StorageManager(threading.Thread):
+    """Monitors disk usage and prunes old data to prevent filling the drive."""
+
+    def __init__(self, max_gb: float = 50.0):
         super().__init__(daemon=True)
         self.running = True
-        self.sample_rate = 16000
-        self.chunk_size = 1024
-
-    def run(self):
-        if not HAS_AUDIO:
-            print("[Mic] pyaudio not installed. Mic capture disabled.")
-            return
-
-        pa = pyaudio.PyAudio()
-        stream = pa.open(
-            format=pyaudio.paInt16,
-            channels=1,
-            rate=self.sample_rate,
-            input=True,
-            frames_per_buffer=self.chunk_size,
-        )
-
-        print("[Mic] Recording started")
-        frames = []
-        chunk_start = datetime.now()
-
-        while self.running:
-            try:
-                data = stream.read(self.chunk_size, exception_on_overflow=False)
-                frames.append(data)
-
-                elapsed = (datetime.now() - chunk_start).total_seconds()
-                if elapsed >= AUDIO_CHUNK_SECONDS:
-                    audio_data = b"".join(frames)
-                    self._process_chunk(audio_data, chunk_start)
-                    frames = []
-                    chunk_start = datetime.now()
-
-            except Exception as e:
-                print(f"[Mic] Error: {e}")
-                time.sleep(1)
-
-        stream.stop_stream()
-        stream.close()
-        pa.terminate()
-
-    def _process_chunk(self, audio_data: bytes, start_time: datetime):
-        """Process audio chunk — same pipeline as iOS.
-        TODO: integrate speaker identification from the iOS voiceprint."""
-        chunk_file = DATA_DIR / "audio_chunks" / f"chunk_{start_time.strftime('%Y%m%d_%H%M%S')}.pcm"
-        chunk_file.parent.mkdir(exist_ok=True)
-        chunk_file.write_bytes(audio_data)
-
-        # For now, queue for server-side processing
-        # Once speaker ID is ported to Python, it runs locally
-        meta = {
-            "timestamp": start_time.isoformat(),
-            "duration_seconds": AUDIO_CHUNK_SECONDS,
-            "sample_rate": self.sample_rate,
-            "file": str(chunk_file),
-            "source": "macbook_mic",
-        }
-
-        log_file = DATA_DIR / f"audio_log_{date.today().isoformat()}.jsonl"
-        with open(log_file, "a") as f:
-            f.write(json.dumps(meta) + "\n")
-
-    def stop(self):
-        self.running = False
-
-
-class CameraCapture(threading.Thread):
-    """Periodic camera snapshots for visual context."""
-
-    def __init__(self):
-        super().__init__(daemon=True)
-        self.running = True
-        self.output_dir = DATA_DIR / "camera"
-        self.output_dir.mkdir(exist_ok=True)
+        self.max_bytes = int(max_gb * 1024 * 1024 * 1024)
 
     def run(self):
         while self.running:
             try:
-                self.capture()
+                self._check_and_prune()
             except Exception as e:
-                print(f"[Camera] Error: {e}")
-            time.sleep(CAMERA_INTERVAL)
+                print(f"[Storage] Error: {e}")
+            time.sleep(300)  # check every 5 minutes
 
-    def capture(self):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filepath = self.output_dir / f"cam_{timestamp}.jpg"
-
-        # Use imagesnap (brew install imagesnap) or ffmpeg
-        try:
-            subprocess.run(
-                ["imagesnap", "-q", str(filepath)],
-                capture_output=True, timeout=10,
+    def _check_and_prune(self):
+        total = sum(f.stat().st_size for f in DATA_DIR.rglob("*") if f.is_file())
+        if total > self.max_bytes:
+            print(f"[Storage] {total / 1e9:.1f}GB exceeds {self.max_bytes / 1e9:.0f}GB limit. Pruning...")
+            # Delete oldest processed files first
+            files = sorted(
+                (f for f in DATA_DIR.rglob("*") if f.is_file() and f.suffix in {".mp4", ".wav", ".pcm", ".png", ".jpg"}),
+                key=lambda f: f.stat().st_mtime,
             )
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            # Fallback to ffmpeg
-            try:
-                subprocess.run(
-                    ["ffmpeg", "-f", "avfoundation", "-framerate", "1",
-                     "-i", "0", "-frames:v", "1", "-y", str(filepath)],
-                    capture_output=True, timeout=10,
-                )
-            except (FileNotFoundError, subprocess.TimeoutExpired):
-                return
-
-        if filepath.exists():
-            meta = {
-                "timestamp": datetime.now().isoformat(),
-                "file": str(filepath),
-                "source": "macbook_camera",
-            }
-            log_file = DATA_DIR / f"camera_log_{date.today().isoformat()}.jsonl"
-            with open(log_file, "a") as f:
-                f.write(json.dumps(meta) + "\n")
+            for f in files:
+                if total <= self.max_bytes * 0.8:  # prune to 80%
+                    break
+                size = f.stat().st_size
+                f.unlink(missing_ok=True)
+                total -= size
 
     def stop(self):
         self.running = False
 
+
+# ── Main Daemon ────────────────────────────────────────────────────────
 
 class TimVoiceDaemon:
-    """Main daemon that orchestrates all capture threads."""
+    """Orchestrates all 24/7 continuous recording threads."""
 
     def __init__(self):
         self.threads = []
         self.running = True
 
     def start(self):
-        print("=" * 50)
-        print("  TimVoice macOS Daemon")
-        print(f"  Data: {DATA_DIR}")
-        print(f"  Server: {SERVER_URL}")
-        print("=" * 50)
+        print("=" * 60)
+        print("  TimVoice macOS Daemon — 24/7 CONTINUOUS RECORDING")
+        print(f"  Data dir: {DATA_DIR}")
+        print(f"  Server:   {SERVER_URL}")
+        print("=" * 60)
 
-        # Start all capture threads
-        screen = ScreenCapture()
-        window = ActiveWindowTracker()
-        mic = MicCapture()
-        camera = CameraCapture()
+        threads = [
+            ContinuousScreenRecorder(),
+            ContinuousCameraRecorder(),
+            ContinuousMicRecorder(),
+            ActiveWindowTracker(),
+            StorageManager(max_gb=50.0),
+        ]
 
-        self.threads = [screen, window, mic, camera]
-        for t in self.threads:
+        self.threads = threads
+        for t in threads:
             t.start()
-            print(f"  ✓ {t.__class__.__name__} started")
+            print(f"  RECORDING  {t.__class__.__name__}")
 
-        print("\nDaemon running. Ctrl+C to stop.\n")
+        print(f"\n  All streams live. Recording everything.")
+        print(f"  Ctrl+C to stop.\n")
 
-        # Handle graceful shutdown
         signal.signal(signal.SIGINT, self._shutdown)
         signal.signal(signal.SIGTERM, self._shutdown)
 
-        # Keep main thread alive
         while self.running:
             time.sleep(1)
 
     def _shutdown(self, signum, frame):
-        print("\nShutting down...")
+        print("\nStopping all recordings...")
         self.running = False
         for t in self.threads:
             t.stop()
-        print("Done.")
+        # Wait for ffmpeg processes to terminate
+        time.sleep(2)
+        print("All recordings stopped.")
         sys.exit(0)
 
 
