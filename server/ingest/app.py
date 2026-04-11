@@ -62,6 +62,53 @@ def ingest():
     return jsonify({"status": "ok", "processed": len(processed)}), 200
 
 
+# ── Health Data Ingestion ─────────────────────────────────────────────
+
+@app.route("/api/ingest/health", methods=["POST"])
+def ingest_health():
+    """Receive batched health data from the iPhone (originally from Apple Watch).
+
+    Payload matches the HealthDataTransfer struct:
+        heartRateSamples, stepCount, activeEnergyBurned,
+        sleepAnalysis, workoutSummary, collectionPeriod
+    """
+    payload = request.get_json()
+    if not payload:
+        return jsonify({"error": "empty payload"}), 400
+
+    today_file = DATA_DIR / f"health_{date.today().isoformat()}.jsonl"
+    payload["ingested_at"] = datetime.now().isoformat()
+
+    with open(today_file, "a") as f:
+        f.write(json.dumps(payload) + "\n")
+
+    return jsonify({"status": "ok"}), 200
+
+
+# ── Game State Ingestion ──────────────────────────────────────────────
+
+@app.route("/api/ingest/game", methods=["POST"])
+def ingest_game():
+    """Receive game state snapshots (pickups, streak, TIME ALIVE).
+
+    Payload matches the SharedGameState struct:
+        pickupsToday, currentStreak, longestStreak,
+        timeAliveSeconds, currentTaunt, activeChallenge,
+        screenTimeThisSession, timestamp
+    """
+    payload = request.get_json()
+    if not payload:
+        return jsonify({"error": "empty payload"}), 400
+
+    today_file = DATA_DIR / f"game_{date.today().isoformat()}.jsonl"
+    payload["ingested_at"] = datetime.now().isoformat()
+
+    with open(today_file, "a") as f:
+        f.write(json.dumps(payload) + "\n")
+
+    return jsonify({"status": "ok"}), 200
+
+
 # ── Briefs ─────────────────────────────────────────────────────────────
 
 @app.route("/api/briefs/morning", methods=["GET"])

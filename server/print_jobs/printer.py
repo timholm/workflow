@@ -7,6 +7,7 @@ Could also target thermal receipt printers or e-ink displays.
 """
 
 import json
+import math
 import os
 import subprocess
 from datetime import date, datetime, timedelta
