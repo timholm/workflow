@@ -5,12 +5,12 @@ import WatchKit
 // MARK: - Notification Categories
 
 enum WatchNotificationCategory: String, CaseIterable {
-    case pickupTaunt       = "pickup_taunt"
-    case challengeIssued   = "challenge_issued"
-    case streakUpdate      = "streak_update"
+    case pickupTaunt        = "pickup_taunt"
+    case challengeIssued    = "challenge_issued"
+    case streakUpdate       = "streak_update"
     case timeAliveMilestone = "time_alive_milestone"
-    case morningBriefReady = "morning_brief_ready"
-    case healthInsight     = "health_insight"
+    case morningBriefReady  = "morning_brief_ready"
+    case healthInsight      = "health_insight"
 }
 
 // MARK: - Notification Actions
@@ -169,11 +169,10 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
             handleChallengeStart(from: response.notification)
 
         case UNNotificationDefaultActionIdentifier:
-            // User tapped the notification itself
+            // User tapped the notification body
             handleDefaultTap(category: categoryID)
 
         case UNNotificationDismissActionIdentifier:
-            // Dismissed — nothing to do
             break
 
         case WatchNotificationAction.dismissTaunt.rawValue:
@@ -224,10 +223,13 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
         let userInfo = notification.request.content.userInfo
 
         // Decode challenge from payload and push it into the engine
-        if let data = userInfo["challenge"] as? Data,
-           let challenge = try? JSONDecoder().decode(ChallengeTransfer.self, from: data) {
-            DispatchQueue.main.async {
-                WatchGameEngine.shared.activeChallenge = challenge
+        if let challengeData = userInfo["challenge_json"] as? String,
+           let data = challengeData.data(using: .utf8) {
+            let decoder = JSONDecoder()
+            if let challenge = try? decoder.decode(ChallengeTransfer.self, from: data) {
+                DispatchQueue.main.async {
+                    WatchGameEngine.shared.activeChallenge = challenge
+                }
             }
         }
     }
@@ -240,7 +242,7 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
             // Engine already has the challenge; the UI will show ChallengeView
             break
         case .pickupTaunt:
-            // Nothing extra — the taunt is already displayed
+            // The taunt is already displayed
             break
         default:
             break
@@ -280,9 +282,11 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
         content.categoryIdentifier = WatchNotificationCategory.challengeIssued.rawValue
         content.sound = .default
 
-        // Attach challenge data for the action handler
-        if let data = try? JSONEncoder().encode(challenge) {
-            content.userInfo["challenge"] = data
+        // Attach serialized challenge for the action handler
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(challenge),
+           let jsonString = String(data: data, encoding: .utf8) {
+            content.userInfo["challenge_json"] = jsonString
         }
 
         let request = UNNotificationRequest(
@@ -376,7 +380,7 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
     // MARK: - Scheduled Notifications
 
     /// Schedules local notifications for TIME ALIVE milestones.
-    /// Called when the phone is put down — sets timers for 1hr, 2hr, 4hr, 8hr off-phone.
+    /// Called when the phone is put down — sets timers for 1hr, 2hr, 4hr, 8hr, 12hr.
     func scheduleRewardNotifications(from putDownTime: Date = Date()) {
         // Cancel any existing milestone notifications first
         let milestoneIDs = timeAliveMilestones.map { "scheduled_alive_\(Int($0.seconds))" }
@@ -412,6 +416,9 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
 
     /// Schedule the daily morning brief notification at 6:00 AM.
     func scheduleMorningBrief() {
+        // Remove any existing morning brief schedule
+        center.removePendingNotificationRequests(withIdentifiers: ["morning_brief_daily"])
+
         let content = UNMutableNotificationContent()
         content.title = "MORNING BRIEF"
         content.body = "Your morning brief is printing."
@@ -443,7 +450,7 @@ final class WatchNotificationHandler: NSObject, ObservableObject, UNUserNotifica
         center.removeAllPendingNotificationRequests()
     }
 
-    /// Cancel only the TIME ALIVE milestone notifications (preserve morning brief, etc.)
+    /// Cancel only TIME ALIVE milestone notifications (preserve morning brief, etc.)
     func cancelTimeAliveMilestones() {
         let milestoneIDs = timeAliveMilestones.map { "scheduled_alive_\(Int($0.seconds))" }
         center.removePendingNotificationRequests(withIdentifiers: milestoneIDs)
