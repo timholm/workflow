@@ -93,6 +93,55 @@ class PrintJobGenerator:
                 lines.append(f'  "{j.get("summary", j.get("text", "")[:80])}"')
             lines.append("")
 
+        # Health: last night's sleep
+        health_entries = self._load_health_data(yesterday, data_dir)
+        # Also check today's data in case sleep was ingested after midnight
+        health_entries += self._load_health_data(today, data_dir)
+        sleep = self._extract_latest_sleep(health_entries)
+        if sleep:
+            total_sec = sleep.get("totalSleepSeconds") or sleep.get("total_sleep_seconds", 0)
+            deep_sec = sleep.get("deepSleepSeconds") or sleep.get("deep_sleep_seconds", 0)
+            hours = int(total_sec // 3600)
+            minutes = int((total_sec % 3600) // 60)
+            deep_hours = int(deep_sec // 3600)
+            deep_min = int((deep_sec % 3600) // 60)
+            bed_time = self._format_time_field(sleep, "sleepStart", "sleep_start")
+            wake_time = self._format_time_field(sleep, "sleepEnd", "sleep_end")
+
+            # Resting heart rate from HR samples
+            resting_hr = self._extract_resting_hr(health_entries)
+
+            lines.append("── LAST NIGHT'S SLEEP ─────────────────────────────")
+            lines.append(f"  Total: {hours}h {minutes}m ({bed_time} → {wake_time})")
+            lines.append(f"  Deep sleep: {deep_hours}h {deep_min}m")
+            lines.append(f"  Resting heart rate: {resting_hr} bpm")
+            lines.append("")
+
+        # Health: yesterday's body stats
+        yesterday_health = self._load_health_data(yesterday, data_dir)
+        steps, energy, workouts = self._extract_body_stats(yesterday_health)
+        if steps or energy or workouts:
+            lines.append("── YESTERDAY'S BODY ───────────────────────────────")
+            lines.append(f"  Steps: {steps:,}")
+            lines.append(f"  Active energy: {energy:.0f} kcal")
+            lines.append(f"  Workouts: {workouts}")
+            lines.append("")
+
+        # Game data
+        game_entries = self._load_game_data(yesterday, data_dir)
+        game = self._extract_latest_game(game_entries)
+        if game:
+            pickups = game.get("pickupsToday") or game.get("pickups_today", 0)
+            time_alive_sec = game.get("timeAliveSeconds") or game.get("time_alive_seconds", 0)
+            streak = game.get("currentStreak") or game.get("current_streak", 0)
+            time_alive = self._format_duration(time_alive_sec)
+
+            lines.append("── THE GAME ───────────────────────────────────────")
+            lines.append(f"  Yesterday pickups: {pickups}")
+            lines.append(f"  TIME ALIVE: {time_alive}")
+            lines.append(f"  Current streak: {streak} days")
+            lines.append("")
+
         lines.append("─" * 60)
         lines.append(f"  Generated {datetime.now().strftime('%I:%M %p')}")
         lines.append("")
@@ -144,6 +193,32 @@ class PrintJobGenerator:
             lines.append("── SHOPPING (complete list) ────────────────────────")
             for s in shopping:
                 lines.append(f"  □ {s.get('summary', s.get('text', '')[:60])}")
+            lines.append("")
+
+        # Health: today so far
+        health_entries = self._load_health_data(today, data_dir)
+        steps, energy, _ = self._extract_body_stats(health_entries)
+        avg_hr = self._extract_avg_hr(health_entries)
+
+        # Project steps to end of day based on current pace
+        now = datetime.now()
+        hours_elapsed = now.hour + now.minute / 60.0
+        projected = int(steps * (16.0 / max(hours_elapsed, 1))) if steps else 0
+
+        game_entries = self._load_game_data(today, data_dir)
+        game = self._extract_latest_game(game_entries)
+        pickups = 0
+        time_alive = "0h 0m"
+        if game:
+            pickups = game.get("pickupsToday") or game.get("pickups_today", 0)
+            time_alive_sec = game.get("timeAliveSeconds") or game.get("time_alive_seconds", 0)
+            time_alive = self._format_duration(time_alive_sec)
+
+        if steps or avg_hr or game:
+            lines.append("── TODAY SO FAR ────────────────────────────────────")
+            lines.append(f"  Steps: {steps:,} (pace for {projected:,})")
+            lines.append(f"  Heart rate: avg {avg_hr} bpm")
+            lines.append(f"  Phone pickups: {pickups} (TIME ALIVE: {time_alive})")
             lines.append("")
 
         lines.append("─" * 60)

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>TimVoice</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TimVoice Watch records your voice when your phone isn't nearby, so no words are lost.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>TimVoice reads your health data to track how the screenless life affects your body. Heart rate, steps, sleep, and workouts appear on your printed briefs.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>TimVoice logs challenge completions as mindfulness sessions in HealthKit.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>workout-processing</string>
+		<string>audio</string>
+	</array>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>community.holm.timvoice</string>
+	<key>WKRunsIndependentlyOfCompanionApp</key>
+	<true/>
+	<key>WKWatchOnly</key>
+	<false/>
+</dict>
+</plist>
