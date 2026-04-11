@@ -1,0 +1,77 @@
+name: TimVoice
+options:
+  bundleIdPrefix: community.holm
+  deploymentTarget:
+    iOS: "17.0"
+    watchOS: "10.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+
+targets:
+
+  # ── iPhone App ─────────────────────────────────────────────────────
+
+  TimVoice:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: TimVoice
+        excludes:
+          - "**/.DS_Store"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: community.holm.timvoice
+        INFOPLIST_FILE: TimVoice/Info.plist
+        CODE_SIGN_ENTITLEMENTS: TimVoice/TimVoice.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+    dependencies:
+      - target: TimVoiceWatch
+    entitlements:
+      path: TimVoice/TimVoice.entitlements
+    preBuildScripts: []
+    postBuildScripts: []
+
+  # ── Watch App ──────────────────────────────────────────────────────
+
+  TimVoiceWatch:
+    type: application
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - path: TimVoiceWatch
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: community.holm.timvoice.watchkitapp
+        INFOPLIST_FILE: TimVoiceWatchExtension/Info.plist
+        TARGETED_DEVICE_FAMILY: "4"
+        WATCHOS_DEPLOYMENT_TARGET: "10.0"
+    dependencies:
+      - target: TimVoiceWatchExtension
+
+  # ── Watch Extension ────────────────────────────────────────────────
+
+  TimVoiceWatchExtension:
+    type: watchkit2-extension
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - path: TimVoiceWatchExtension
+      - path: TimVoice/Models/SharedGameState.swift
+      - path: TimVoice/Models/AudioChunk.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: community.holm.timvoice.watchkitextension
+        INFOPLIST_FILE: TimVoiceWatchExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: TimVoiceWatchExtension/TimVoiceWatchExtension.entitlements
+        TARGETED_DEVICE_FAMILY: "4"
+        WATCHOS_DEPLOYMENT_TARGET: "10.0"
+    entitlements:
+      path: TimVoiceWatchExtension/TimVoiceWatchExtension.entitlements
