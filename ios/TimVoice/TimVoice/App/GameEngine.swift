@@ -25,8 +25,53 @@ final class GameEngine: ObservableObject {
     private var tauntTimer: Timer?
     private var totalOffScreenToday: TimeInterval = 0
     private var lastPutDown: Date
-    private let defaults = UserDefaults.standard
+    private let defaults = UserDefaults(suiteName: "group.community.holm.timvoice")!
     private let motionManager = CMMotionManager()
+
+    // MARK: - Watch Sync
+
+    /// Builds a SharedGameState snapshot and pushes it to the Watch.
+    private func pushCurrentState() {
+        let state = SharedGameState(
+            pickupsToday: pickupsToday,
+            currentStreak: currentStreak,
+            longestStreak: longestStreak,
+            timeAliveSeconds: totalOffScreenToday,
+            currentTaunt: currentTaunt,
+            activeChallenge: activeChallenge?.toChallengeTransfer(),
+            screenTimeThisSession: screenTimeThisSession,
+            timestamp: .now
+        )
+        PhoneSessionManager.shared.pushGameState(state)
+    }
+
+    /// Called when the Watch reports a challenge was completed.
+    /// Credits TIME ALIVE bonus based on the challenge reward text.
+    func completeChallenge(completion: ChallengeCompletionMessage) {
+        guard let challenge = activeChallenge,
+              challenge.text == completion.challengeText else { return }
+
+        // Parse the bonus minutes from the reward string (e.g. "+60 min TIME ALIVE bonus")
+        let bonusMinutes = parseRewardMinutes(from: challenge.reward)
+        totalOffScreenToday += Double(bonusMinutes) * 60.0
+
+        activeChallenge = nil
+        saveState()
+        pushCurrentState()
+
+        print("[GameEngine] Challenge completed via Watch: +\(bonusMinutes) min TIME ALIVE")
+    }
+
+    /// Extracts the numeric minute value from a reward string like "+60 min TIME ALIVE bonus".
+    private func parseRewardMinutes(from reward: String) -> Int {
+        let pattern = #"\+(\d+)\s*min"#
+        guard let regex = try? NSRegularExpression(pattern: pattern),
+              let match = regex.firstMatch(in: reward, range: NSRange(reward.startIndex..., in: reward)),
+              let range = Range(match.range(at: 1), in: reward) else {
+            return 0
+        }
+        return Int(reward[range]) ?? 0
+    }
 
     // MARK: - Computed
 
@@ -89,6 +134,7 @@ final class GameEngine: ObservableObject {
         }
 
         saveState()
+        pushCurrentState()
         triggerHaptic()
     }
 
@@ -99,6 +145,7 @@ final class GameEngine: ObservableObject {
         screenTimeTimer = nil
         tauntTimer = nil
         saveState()
+        pushCurrentState()
     }
 
     // MARK: - Taunts
@@ -108,6 +155,7 @@ final class GameEngine: ObservableObject {
         let pickups = pickupsToday
 
         currentTaunt = generateTaunt(screenTime: seconds, pickups: pickups)
+        pushCurrentState()
     }
 
     private func generateTaunt(screenTime: TimeInterval, pickups: Int) -> String {
@@ -357,11 +405,15 @@ struct Challenge {
     let reward: String
     let type: ChallengeType
 
-    enum ChallengeType {
+    enum ChallengeType: String {
         case physical
         case social
         case creative
         case mindful
         case adventure
+    }
+
+    func toChallengeTransfer() -> ChallengeTransfer {
+        ChallengeTransfer(text: text, reward: reward, type: type.rawValue)
     }
 }
