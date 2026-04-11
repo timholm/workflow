@@ -2,17 +2,6 @@ import SwiftUI
 import WatchKit
 import HealthKit
 
-// MARK: - WatchGameEngine Bridge
-
-/// Minimal protocol so this view doesn't depend on the concrete engine.
-/// The real WatchGameEngine conforms to this.
-protocol ChallengeCompletable: AnyObject {
-    func completeChallenge()
-    func skipChallenge()
-}
-
-// MARK: - View
-
 /// Full-screen challenge view. Shows the dare, the reward, and
 /// the tools to prove you did it (heart rate for physical,
 /// countdown for mindful). No decoration. Just the work.
@@ -23,11 +12,12 @@ struct WatchChallengeView: View {
     @State private var skipped = false
     @State private var mindfulSecondsRemaining: Int = 0
     @State private var mindfulTimerActive = false
+    @State private var mindfulTimerFinished = false
     @State private var heartRate: Double = 0
     @State private var heartRateQuery: HKAnchoredObjectQuery?
 
     private let healthStore = HKHealthStore()
-    private let mindfulDuration: Int = 300 // 5 minutes default
+    private let mindfulDuration: Int = 300 // 5 minutes
 
     var body: some View {
         Group {
@@ -68,13 +58,10 @@ struct WatchChallengeView: View {
                     .padding(.vertical, 4)
 
                 // Type-specific tools
-                switch challenge.type {
-                case .physical:
+                if challenge.type == "physical" {
                     physicalOverlay
-                case .mindful:
+                } else if challenge.type == "mindful" {
                     mindfulOverlay
-                default:
-                    EmptyView()
                 }
 
                 Spacer(minLength: 8)
@@ -147,7 +134,7 @@ struct WatchChallengeView: View {
                 .font(.system(size: 32, weight: .black, design: .monospaced))
                 .foregroundColor(mindfulSecondsRemaining > 0 ? .cyan : .green)
 
-            if !mindfulTimerActive && mindfulSecondsRemaining == 0 && !completed {
+            if !mindfulTimerActive && !mindfulTimerFinished {
                 Button(action: startMindfulTimer) {
                     Text("START TIMER")
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
@@ -162,7 +149,7 @@ struct WatchChallengeView: View {
                 Text("be still.")
                     .font(.system(size: 10, design: .monospaced))
                     .foregroundColor(.white.opacity(0.4))
-            } else if mindfulSecondsRemaining == 0 {
+            } else if mindfulTimerFinished {
                 Text("done. you survived stillness.")
                     .font(.system(size: 10, design: .monospaced))
                     .foregroundColor(.green)
@@ -213,7 +200,7 @@ struct WatchChallengeView: View {
         completed = true
         stopHeartRateStream()
 
-        // Celebration haptics
+        // Celebration haptics — three rapid success pulses
         let device = WKInterfaceDevice.current()
         for i in 0..<3 {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.25) {
@@ -236,7 +223,6 @@ struct WatchChallengeView: View {
 
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
 
-        // Request authorization if needed
         healthStore.requestAuthorization(toShare: nil, read: [heartRateType]) { granted, _ in
             guard granted else { return }
             self.observeHeartRate(type: heartRateType)
@@ -294,6 +280,7 @@ struct WatchChallengeView: View {
             } else {
                 timer.invalidate()
                 self.mindfulTimerActive = false
+                self.mindfulTimerFinished = true
                 WKInterfaceDevice.current().play(.success)
             }
         }
@@ -301,71 +288,34 @@ struct WatchChallengeView: View {
 
     // MARK: - Helpers
 
-    private func badgeText(for type: ChallengeType) -> String {
-        switch type {
-        case .physical:  return "[ PHYSICAL ]"
-        case .social:    return "[ SOCIAL ]"
-        case .creative:  return "[ CREATIVE ]"
-        case .mindful:   return "[ MINDFUL ]"
-        case .adventure: return "[ ADVENTURE ]"
-        }
+    private func badgeText(for type: String) -> String {
+        return "[ \(type.uppercased()) ]"
     }
 
-    private func badgeColor(for type: ChallengeType) -> Color {
+    private func badgeColor(for type: String) -> Color {
         switch type {
-        case .physical:  return .red
-        case .social:    return .blue
-        case .creative:  return .purple
-        case .mindful:   return .cyan
-        case .adventure: return .orange
+        case "physical":  return .red
+        case "social":    return .blue
+        case "creative":  return .purple
+        case "mindful":   return .cyan
+        case "adventure": return .orange
+        default:          return .gray
         }
     }
 }
 
-// MARK: - Shared Types
+// MARK: - WatchGameEngine Skip Extension
 
-/// Codable challenge for Watch <-> Phone transfer.
-struct ChallengeTransfer: Codable, Equatable {
-    let text: String
-    let reward: String
-    let type: ChallengeType
-}
-
-enum ChallengeType: String, Codable {
-    case physical
-    case social
-    case creative
-    case mindful
-    case adventure
-}
-
-// MARK: - WatchGameEngine (minimal stub for compilation)
-
-/// The real engine lives in the Game/ folder. This gives the view
-/// something to bind to at the type level. Replace with the real
-/// implementation when wiring up.
-class WatchGameEngine: ObservableObject {
-    static let shared = WatchGameEngine()
-
-    @Published var pickupsToday: Int = 0
-    @Published var currentStreak: Int = 0
-    @Published var timeAliveSeconds: TimeInterval = 0
-    @Published var activeChallenge: ChallengeTransfer?
-    @Published var currentTaunt: String = ""
-    @Published var encouragementMessage: String = ""
-    @Published var isPhoneFarAway: Bool = false
-
-    var timeAliveString: String {
-        let h = Int(timeAliveSeconds) / 3600
-        let m = (Int(timeAliveSeconds) % 3600) / 60
-        return String(format: "%02d:%02d", h, m)
-    }
-
-    func completeChallenge() {
-        activeChallenge = nil
-    }
-
+extension WatchGameEngine {
+    /// Called when Tim skips a challenge on the Watch.
+    /// No reward. No celebration. Just quiet disappointment.
     func skipChallenge() {
+        guard activeChallenge != nil else { return }
+
+        let device = WKInterfaceDevice.current()
+        device.play(.failure)
+
+        encouragement = "Skipped. The phone wins this round."
         activeChallenge = nil
     }
 }

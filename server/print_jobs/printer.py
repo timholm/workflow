@@ -277,6 +277,78 @@ class PrintJobGenerator:
                 lines.append(f'  • "{j.get("summary", j.get("text", "")[:80])}"')
             lines.append("")
 
+        # Body report — aggregate health data across the week
+        all_health = []
+        all_game = []
+        current = start
+        while current <= end:
+            all_health.extend(self._load_health_data(current, data_dir))
+            all_game.extend(self._load_game_data(current, data_dir))
+            current += timedelta(days=1)
+
+        # Compute weekly body stats
+        daily_steps = []
+        daily_resting_hr = []
+        total_workouts = 0
+        daily_sleep_hours = []
+
+        current = start
+        while current <= end:
+            day_health = self._load_health_data(current, data_dir)
+            day_steps, _, day_workouts = self._extract_body_stats(day_health)
+            if day_steps:
+                daily_steps.append(day_steps)
+            total_workouts += day_workouts
+
+            rhr = self._extract_resting_hr(day_health)
+            if rhr and rhr != "—":
+                try:
+                    daily_resting_hr.append(int(rhr))
+                except (ValueError, TypeError):
+                    pass
+
+            sleep = self._extract_latest_sleep(day_health)
+            if sleep:
+                total_sec = sleep.get("totalSleepSeconds") or sleep.get("total_sleep_seconds", 0)
+                if total_sec:
+                    daily_sleep_hours.append(total_sec / 3600.0)
+
+            current += timedelta(days=1)
+
+        avg_steps = int(sum(daily_steps) / len(daily_steps)) if daily_steps else 0
+        avg_hr = int(sum(daily_resting_hr) / len(daily_resting_hr)) if daily_resting_hr else 0
+        avg_sleep = round(sum(daily_sleep_hours) / len(daily_sleep_hours), 1) if daily_sleep_hours else 0
+
+        if avg_steps or avg_hr or total_workouts or avg_sleep:
+            lines.append("── BODY REPORT ────────────────────────────────────")
+            lines.append(f"  Avg daily steps: {avg_steps:,}")
+            lines.append(f"  Avg resting HR: {avg_hr} bpm")
+            lines.append(f"  Total workouts: {total_workouts}")
+            lines.append(f"  Avg sleep: {avg_sleep}h")
+            lines.append("")
+
+        # Screenless correlation — compare sleep on low vs high pickup days
+        from categorize.health_insights import HealthInsightsGenerator
+        insights_gen = HealthInsightsGenerator()
+        insights = insights_gen.generate_weekly_insights(start, end, data_dir)
+
+        sleep_summary = insights.get("sleep_pickup_summary", {})
+        good_sleep = sleep_summary.get("low_pickup_avg_sleep_hours")
+        bad_sleep = sleep_summary.get("high_pickup_avg_sleep_hours")
+        good_sleep_str = f"{good_sleep}h" if good_sleep else "—"
+        bad_sleep_str = f"{bad_sleep}h" if bad_sleep else "—"
+
+        lines.append("── SCREENLESS CORRELATION ─────────────────────────")
+        lines.append(f"  Days with < 20 pickups: avg sleep {good_sleep_str}")
+        lines.append(f"  Days with > 40 pickups: avg sleep {bad_sleep_str}")
+
+        weekly_insight = insights.get("weekly_insight")
+        if weekly_insight:
+            lines.append(f"  {weekly_insight}")
+        else:
+            lines.append("  The data doesn't lie. Keep going.")
+        lines.append("")
+
         lines.append("─" * 60)
         lines.append(f"  Generated {datetime.now().strftime('%I:%M %p')}")
         lines.append("")
@@ -309,7 +381,131 @@ class PrintJobGenerator:
         else:
             print(f"[Printer] Saved to {filepath} (no printer configured)")
 
-    # ── Helpers ────────────────────────────────────────────────────────
+    # ── Health & Game Data Helpers ────────────────────────────────────
+
+    def _load_health_data(self, d: date, data_dir: Path) -> list:
+        """Load all health ingestion entries for a given date."""
+        filepath = data_dir / f"health_{d.isoformat()}.jsonl"
+        return self._load_jsonl(filepath)
+
+    def _load_game_data(self, d: date, data_dir: Path) -> list:
+        """Load all game state snapshots for a given date."""
+        filepath = data_dir / f"game_{d.isoformat()}.jsonl"
+        return self._load_jsonl(filepath)
+
+    def _load_jsonl(self, filepath: Path) -> list:
+        """Load all JSON lines from a file."""
+        if not filepath.exists():
+            return []
+        entries = []
+        with open(filepath) as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        entries.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+        return entries
+
+    def _extract_latest_sleep(self, health_entries: list) -> dict | None:
+        """Extract the most recent sleep summary from a list of health entries."""
+        for entry in reversed(health_entries):
+            sleep = entry.get("sleepAnalysis") or entry.get("sleep_analysis")
+            if sleep:
+                return sleep
+        return None
+
+    def _extract_body_stats(self, health_entries: list) -> tuple:
+        """Extract the best step count, active energy, and workout count from health entries.
+
+        Returns (steps: int, active_energy: float, workout_count: int).
+        Uses the maximum values seen (since batches are cumulative snapshots).
+        """
+        max_steps = 0
+        max_energy = 0.0
+        workout_count = 0
+
+        for entry in health_entries:
+            steps = entry.get("stepCount") or entry.get("step_count", 0)
+            energy = entry.get("activeEnergyBurned") or entry.get("active_energy_burned", 0)
+            if steps > max_steps:
+                max_steps = steps
+            if energy > max_energy:
+                max_energy = energy
+
+            workout = entry.get("workoutSummary") or entry.get("workout_summary")
+            if workout:
+                workout_count += 1
+
+        return max_steps, max_energy, workout_count
+
+    def _extract_resting_hr(self, health_entries: list) -> str:
+        """Extract resting heart rate from heart rate samples.
+
+        Looks for samples with motionContext "resting" or "sedentary".
+        Returns the average as a string, or "—" if unavailable.
+        """
+        resting_samples = []
+        for entry in health_entries:
+            samples = entry.get("heartRateSamples") or entry.get("heart_rate_samples", [])
+            for s in samples:
+                ctx = s.get("motionContext") or s.get("motion_context", "")
+                if ctx in ("resting", "sedentary"):
+                    bpm = s.get("bpm", 0)
+                    if bpm > 0:
+                        resting_samples.append(bpm)
+
+        if not resting_samples:
+            return "—"
+
+        return str(int(sum(resting_samples) / len(resting_samples)))
+
+    def _extract_avg_hr(self, health_entries: list) -> str:
+        """Extract overall average heart rate from all samples."""
+        all_bpm = []
+        for entry in health_entries:
+            samples = entry.get("heartRateSamples") or entry.get("heart_rate_samples", [])
+            for s in samples:
+                bpm = s.get("bpm", 0)
+                if bpm > 0:
+                    all_bpm.append(bpm)
+
+        if not all_bpm:
+            return "—"
+
+        return str(int(sum(all_bpm) / len(all_bpm)))
+
+    def _extract_latest_game(self, game_entries: list) -> dict | None:
+        """Get the most recent game state snapshot."""
+        if not game_entries:
+            return None
+        return game_entries[-1]
+
+    def _format_time_field(self, data: dict, camel_key: str, snake_key: str) -> str:
+        """Format a timestamp field from health data for display."""
+        raw = data.get(camel_key) or data.get(snake_key)
+        if not raw:
+            return "—"
+        try:
+            if isinstance(raw, (int, float)):
+                # Seconds since 1970
+                dt = datetime.fromtimestamp(raw)
+            else:
+                dt = datetime.fromisoformat(str(raw))
+            return dt.strftime("%-I:%M %p")
+        except (ValueError, TypeError, OSError):
+            return str(raw)
+
+    def _format_duration(self, seconds: float) -> str:
+        """Format seconds into a human-readable 'Xh Ym' string."""
+        if not seconds:
+            return "0h 0m"
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        return f"{hours}h {minutes}m"
+
+    # ── Segment Helpers ───────────────────────────────────────────────
 
     def _load_segments(self, d: date, data_dir: Path) -> list:
         filepath = data_dir / f"raw_{d.isoformat()}.jsonl"
