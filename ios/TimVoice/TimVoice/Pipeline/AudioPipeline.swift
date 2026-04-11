@@ -59,6 +59,14 @@ final class AudioPipeline: ObservableObject {
         print("[Pipeline] Stopped")
     }
 
+    // MARK: - Watch Audio
+
+    /// Public entry point for audio received from the Apple Watch via WatchConnectivity.
+    /// Routes through the same VAD + speaker ID + transcription pipeline.
+    func processWatchAudio(_ chunk: AudioChunk) {
+        processChunk(chunk)
+    }
+
     // MARK: - Chunk Processing
 
     private func processChunk(_ chunk: AudioChunk) {

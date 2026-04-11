@@ -94,15 +94,83 @@ final class ServerSync: ObservableObject {
         }
     }
 
+    // MARK: - Health Data Sync (from Watch)
+
+    /// Posts a batch of health data received from the Watch to the server
+    /// for inclusion in printed morning/afternoon briefs.
+    func syncHealthData(_ data: HealthDataTransfer) {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        guard let url = URL(string: "\(serverBaseURL)/api/ingest/health"),
+              let body = try? encoder.encode(data) else {
+            print("[Sync] Failed to encode health data")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("[Sync] Health data synced successfully")
+            } else {
+                print("[Sync] Health sync failed: \(error?.localizedDescription ?? "HTTP \((response as? HTTPURLResponse)?.statusCode ?? 0)")")
+            }
+        }.resume()
+    }
+
+    // MARK: - Game Stats Sync
+
+    /// Posts the current game state to the server so it can be included
+    /// in printed briefs (pickups, streaks, TIME ALIVE, etc.).
+    func syncGameStats(_ state: SharedGameState) {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+
+        struct GameStatsPayload: Codable {
+            let gameState: SharedGameState
+            let deviceId: String
+        }
+
+        let payload = GameStatsPayload(gameState: state, deviceId: deviceId())
+        guard let url = URL(string: "\(serverBaseURL)/api/ingest/game"),
+              let body = try? encoder.encode(payload) else {
+            print("[Sync] Failed to encode game stats")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                print("[Sync] Game stats synced successfully")
+            } else {
+                print("[Sync] Game stats sync failed: \(error?.localizedDescription ?? "HTTP \((response as? HTTPURLResponse)?.statusCode ?? 0)")")
+            }
+        }.resume()
+    }
+
     // MARK: - Device ID
+
+    private let sharedDefaults = UserDefaults(suiteName: "group.community.holm.timvoice")!
 
     private func deviceId() -> String {
         let key = "com.timvoice.deviceId"
-        if let existing = UserDefaults.standard.string(forKey: key) {
+        if let existing = sharedDefaults.string(forKey: key) {
             return existing
         }
+        // Migrate from standard defaults if present
+        if let legacy = UserDefaults.standard.string(forKey: key) {
+            sharedDefaults.set(legacy, forKey: key)
+            return legacy
+        }
         let id = UUID().uuidString
-        UserDefaults.standard.set(id, forKey: key)
+        sharedDefaults.set(id, forKey: key)
         return id
     }
 }

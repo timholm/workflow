@@ -23,6 +23,8 @@ struct TimVoiceApp: App {
                         audioManager.startRecording()
                         AudioPipeline.shared.start()
                         CameraManager.shared.startCapture()
+                        // Activate Watch connectivity
+                        _ = PhoneSessionManager.shared
                     }
             }
         }

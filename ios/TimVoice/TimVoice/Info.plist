@@ -17,7 +17,14 @@
         <string>audio</string>
         <string>processing</string>
         <string>fetch</string>
+        <string>remote-notification</string>
     </array>
+
+    <!--
+        App Group entitlement (group.community.holm.timvoice) must be added
+        via Xcode: Signing & Capabilities > + Capability > App Groups.
+        This enables shared UserDefaults between the iPhone app and Watch extension.
+    -->
 
     <!-- Privacy usage descriptions (required by Apple) -->
     <key>NSMicrophoneUsageDescription</key>
