@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+__pycache__
+*.pyc
+*.db
+*.sqlite*
+/data/
+docs/
+k8s/
+.DS_Store
+README.md
+.gitignore

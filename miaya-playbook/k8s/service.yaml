@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: miaya-playbook
+  namespace: miaya-playbook
+  labels:
+    app: miaya-playbook
+spec:
+  type: ClusterIP
+  selector:
+    app: miaya-playbook
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8501
+      protocol: TCP

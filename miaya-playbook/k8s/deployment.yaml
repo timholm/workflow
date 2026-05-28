@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miaya-playbook
+  namespace: miaya-playbook
+  labels:
+    app: miaya-playbook
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate # SQLite single writer; never run >1 replica
+  selector:
+    matchLabels:
+      app: miaya-playbook
+  template:
+    metadata:
+      labels:
+        app: miaya-playbook
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: app
+          image: ghcr.io/OWNER/miaya-playbook:latest # update OWNER to your GitHub org/user
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8501
+          env:
+            - name: MIAYA_DB
+              value: /data/playbook.db
+            - name: MIAYA_UPLOADS
+              value: /data/uploads
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: 8501
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: 8501
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: miaya-data

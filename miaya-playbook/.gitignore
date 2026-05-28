@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite*
+/data/
+.DS_Store
+uv.lock
+.streamlit/secrets.toml
